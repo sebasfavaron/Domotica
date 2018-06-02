@@ -5,14 +5,14 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".MainActivity$GeneralFragment">
 
-    <ListView
-        android:id="@+id/list"
+    <ExpandableListView
+        android:id="@+id/expList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!--<LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal">
+    <LinearLayout android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal">
         <LinearLayout android:id="@+id/linearLayout2" android:layout_height="fill_parent" android:gravity="center" android:layout_width="match_parent">
             <Button
                 android:id="@+id/button"
@@ -22,6 +22,6 @@
                 android:text="Puto el que toca"
                 />
         </LinearLayout>
-    </LinearLayout>-->
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

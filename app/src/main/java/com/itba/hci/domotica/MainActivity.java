@@ -18,10 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,24 +99,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * A general fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class GeneralFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        ExpandableListAdapter listAdapter;
+        ExpandableListView expListView;
+        List<String> listDataHeader;
+        HashMap<String, List<String>> listDataChild;
 
-        public PlaceholderFragment() {
+        public GeneralFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static GeneralFragment newInstance(int sectionNumber) {
+            GeneralFragment fragment;
+            if(sectionNumber == 0)
+                fragment = new HomeFragment();
+            else if(sectionNumber == 1)
+                fragment = new DeviceFragment();
+            else
+                fragment = new RoutineFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -123,17 +137,80 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            ArrayList<String> list = new ArrayList<>();
+
+            /*ArrayList<String> list = new ArrayList<>();
             for(int i=0; i<5; i++)
                 list.add("El " + Math.random());
-            ListView listView = (ListView) rootView.findViewById(R.id.list);
+            ListView listView = (ListView) rootView.findViewById(R.id.expList);
             ArrayAdapter<String> listViewAdapter = new ArrayAdapter<>(
                     getActivity(),
                     android.R.layout.simple_list_item_1,
                     list
             );
-            listView.setAdapter(listViewAdapter);
+            listView.setAdapter(listViewAdapter);*/
+
+            Button button = (Button) rootView.findViewById(R.id.button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Ayyyyyy holaa", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+            });
+
+            // get the listview
+            expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
+
+            // preparing list data
+            prepareListData();
+
+            listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+
+            // setting list adapter
+            expListView.setAdapter(listAdapter);
             return rootView;
+        }
+
+        /*
+         * Preparing the list data
+         */
+        private void prepareListData() {
+            listDataHeader = new ArrayList<String>();
+            listDataChild = new HashMap<String, List<String>>();
+
+            // Adding child data
+            listDataHeader.add("Top 250");
+            listDataHeader.add("Now Showing");
+            listDataHeader.add("Coming Soon..");
+
+            // Adding child data
+            List<String> top250 = new ArrayList<String>();
+            top250.add("The Shawshank Redemption");
+            top250.add("The Godfather");
+            top250.add("The Godfather: Part II");
+            top250.add("Pulp Fiction");
+            top250.add("The Good, the Bad and the Ugly");
+            top250.add("The Dark Knight");
+            top250.add("12 Angry Men");
+
+            List<String> nowShowing = new ArrayList<String>();
+            nowShowing.add("The Conjuring");
+            nowShowing.add("Despicable Me 2");
+            nowShowing.add("Turbo");
+            nowShowing.add("Grown Ups 2");
+            nowShowing.add("Red 2");
+            nowShowing.add("The Wolverine");
+
+            List<String> comingSoon = new ArrayList<String>();
+            comingSoon.add("2 Guns");
+            comingSoon.add("The Smurfs 2");
+            comingSoon.add("The Spectacular Now");
+            comingSoon.add("The Canyons");
+            comingSoon.add("Europa Report");
+
+            listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+            listDataChild.put(listDataHeader.get(1), nowShowing);
+            listDataChild.put(listDataHeader.get(2), comingSoon);
         }
     }
 
@@ -150,8 +227,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            // Return a GeneralFragment (defined as a static inner class below).
+            return GeneralFragment.newInstance(position + 1);
         }
 
         @Override

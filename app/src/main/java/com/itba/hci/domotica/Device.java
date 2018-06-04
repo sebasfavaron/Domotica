@@ -3,17 +3,23 @@ package com.itba.hci.domotica;
 public class Device {
     private String name;
     private String id;
+    private String type;
     private String typeId;
     private String meta;
 
     public Device(String name, String type){
         this.name = name;
+        this.type = type;
         this.typeId = Device.typeToId(type);
         this.meta = "";
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public static String typeToId(String type){
@@ -33,9 +39,9 @@ public class Device {
             case "timer":
                 return "ofglvd9gqX8yfl3l";
             case "refrigerator":
-                return  "rnizejqr2di0okho";
+                return "rnizejqr2di0okho";
             default:
-                throw new RuntimeException("Wrong type");
+                return "not_an_id";
         }
     }
     public static String idToType(String id){
@@ -57,7 +63,7 @@ public class Device {
             case "rnizejqr2di0okho":
                 return "refrigerator";
             default:
-                throw new RuntimeException("Wrong id");
+                return "not_a_type";
         }
     }
 }

@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         ExpandableListAdapter listAdapter;
         ExpandableListView expListView;
         List<String> listDataHeader;
-        HashMap<String, List<String>> listDataChild;
+        HashMap<String, Device> listDataChild;
 
         public GeneralFragment() {
         }
@@ -138,26 +138,6 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-            /*ArrayList<String> list = new ArrayList<>();
-            for(int i=0; i<5; i++)
-                list.add("El " + Math.random());
-            ListView listView = (ListView) rootView.findViewById(R.id.expList);
-            ArrayAdapter<String> listViewAdapter = new ArrayAdapter<>(
-                    getActivity(),
-                    android.R.layout.simple_list_item_1,
-                    list
-            );
-            listView.setAdapter(listViewAdapter);*/
-
-            Button button = (Button) rootView.findViewById(R.id.button);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Ayyyyyy holaa", Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show();
-                }
-            });
-
             // get the listview
             expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
@@ -175,42 +155,20 @@ public class MainActivity extends AppCompatActivity {
          * Preparing the list data
          */
         private void prepareListData() {
+            //todo: los hijos tienen una lista de info aunque no necesitan nada por ahora. Lo dejo por si acaso
             listDataHeader = new ArrayList<String>();
-            listDataChild = new HashMap<String, List<String>>();
+            listDataChild = new HashMap<String, Device>();
 
             // Adding child data
-            listDataHeader.add("Top 250");
-            listDataHeader.add("Now Showing");
-            listDataHeader.add("Coming Soon..");
+            listDataHeader.add("Door");
+            listDataHeader.add("Refrigerator");
+            listDataHeader.add("Oven");
 
             // Adding child data
-            List<String> top250 = new ArrayList<String>();
-            top250.add("The Shawshank Redemption");
-            top250.add("The Godfather");
-            top250.add("The Godfather: Part II");
-            top250.add("Pulp Fiction");
-            top250.add("The Good, the Bad and the Ugly");
-            top250.add("The Dark Knight");
-            top250.add("12 Angry Men");
-
-            List<String> nowShowing = new ArrayList<String>();
-            nowShowing.add("The Conjuring");
-            nowShowing.add("Despicable Me 2");
-            nowShowing.add("Turbo");
-            nowShowing.add("Grown Ups 2");
-            nowShowing.add("Red 2");
-            nowShowing.add("The Wolverine");
-
-            List<String> comingSoon = new ArrayList<String>();
-            comingSoon.add("2 Guns");
-            comingSoon.add("The Smurfs 2");
-            comingSoon.add("The Spectacular Now");
-            comingSoon.add("The Canyons");
-            comingSoon.add("Europa Report");
-
-            listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-            listDataChild.put(listDataHeader.get(1), nowShowing);
-            listDataChild.put(listDataHeader.get(2), comingSoon);
+            //todo: cambiar el formato de type, String es muy propenso a errores. Capaz hacer macros de tipo int PUERTA=0 y hacer type un int
+            listDataChild.put(listDataHeader.get(0), new Device("door1","door")); // Header, Child data
+            listDataChild.put(listDataHeader.get(1), new Device("refrigerator1","refrigerator"));
+            listDataChild.put(listDataHeader.get(2), new Device("oven1","oven"));
         }
     }
 

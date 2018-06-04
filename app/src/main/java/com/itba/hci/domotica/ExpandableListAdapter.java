@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,14 @@ import android.widget.TextView;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context _context;
+    private Context context;
     private List<String> listDataHeader; // header titles
     // child data in format of header title, child title
-    private HashMap<String, List<String>> listDataChild;
+    private HashMap<String, Device> listDataChild;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
-        this._context = context;
+                                 HashMap<String, Device> listChildData) {
+        this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
     }
@@ -32,7 +31,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return listDataChild.get(listDataHeader.get(i)).size();
+        return 1; //solo tiene un hijo, la tarjeta que controla el dispositivo
     }
 
     @Override
@@ -42,7 +41,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int i, int i1) {
-        return listDataChild.get(listDataHeader.get(i)).get(i1);
+        return listDataChild.get(listDataHeader.get(i));
     }
 
     @Override
@@ -62,8 +61,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater)_context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.list_group,null);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.item_header,null);
 
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());
@@ -73,9 +72,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        TextView textView = new TextView(_context);
-        textView.setText(getChild(i, i1).toString());
-        return textView;
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        switch (listDataChild.get(listDataHeader.get(i)).getType()){
+            case "door": view = inflater.inflate(R.layout.door_content,null); break;
+            default: view = inflater.inflate(R.layout.item_content,null);
+        }
+
+
+        return view;
     }
 
     /*
@@ -85,7 +90,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(view == null)
         {
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_group,null);
+            view = inflater.inflate(R.layout.item_header,null);
         }
         TextView lblListHeader = (TextView)view.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
@@ -99,7 +104,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if(view == null)
         {
             LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.list_item,null);
+            view = inflater.inflate(R.layout.item_content,null);
         }
 
         TextView txtListChild = (TextView)view.findViewById(R.id.lblListItem);

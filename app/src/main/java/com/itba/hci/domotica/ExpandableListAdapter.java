@@ -75,7 +75,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         switch (listDataChild.get(listDataHeader.get(i)).getType()){
+            case "ac": view = inflater.inflate(R.layout.door_content,null); break;
+            case "alarm": view = inflater.inflate(R.layout.alarm_content,null); break;
+            case "blind": view = inflater.inflate(R.layout.blind_content,null); break;
             case "door": view = inflater.inflate(R.layout.door_content,null); break;
+            case "lamp": view = inflater.inflate(R.layout.lamp_content,null); break;
+            case "oven": view = inflater.inflate(R.layout.oven_content,null); break;
+            case "refrigerator": view = inflater.inflate(R.layout.refrigerator_content,null); break;
+            case "timer": view = inflater.inflate(R.layout.timer_content,null); break;
             default: view = inflater.inflate(R.layout.item_content,null);
         }
 

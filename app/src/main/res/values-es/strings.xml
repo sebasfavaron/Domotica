@@ -6,4 +6,6 @@
     <string name="tab_text_3">Rutinas</string>
     <string name="action_settings">Configuraciones</string>
     <string name="section_format">Hola Mundo from section: %1$d</string>
+    <string name="open_text">Abierto</string>
+    <string name="closed_text">Cerrado</string>
 </resources>

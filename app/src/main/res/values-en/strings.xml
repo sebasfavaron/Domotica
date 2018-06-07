@@ -6,4 +6,6 @@
     <string name="tab_text_3">Routines</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello world from section: %1$d</string>
+    <string name="open_text">Open</string>
+    <string name="closed_text">Closed</string>
 </resources>

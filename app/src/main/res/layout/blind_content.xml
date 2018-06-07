@@ -14,7 +14,7 @@
         android:id="@+id/door_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOn="Open"
+        android:textOn="@string/open_text"
         android:textOff="Closed"
         android:showText="true"
         app:layout_constraintTop_toBottomOf="@+id/door_title"/>

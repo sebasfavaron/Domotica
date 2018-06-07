@@ -17,11 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
          */
         public static GeneralFragment newInstance(int sectionNumber) {
             GeneralFragment fragment;
-            if(sectionNumber == 0)
+            if(sectionNumber == 1)
                 fragment = new HomeFragment();
-            else if(sectionNumber == 1)
+            else if(sectionNumber == 2)
                 fragment = new DeviceFragment();
             else
                 fragment = new RoutineFragment();
@@ -137,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            this.listDataHeader = new ArrayList<>();
+            this.listDataChild = new HashMap<>();
 
             // get the listview
             expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
@@ -155,20 +153,7 @@ public class MainActivity extends AppCompatActivity {
          * Preparing the list data
          */
         private void prepareListData() {
-            //todo: los hijos tienen una lista de info aunque no necesitan nada por ahora. Lo dejo por si acaso
-            listDataHeader = new ArrayList<String>();
-            listDataChild = new HashMap<String, Device>();
 
-            // Adding child data
-            listDataHeader.add("Door");
-            listDataHeader.add("Refrigerator");
-            listDataHeader.add("Oven");
-
-            // Adding child data
-            //todo: cambiar el formato de type, String es muy propenso a errores. Capaz hacer macros de tipo int PUERTA=0 y hacer type un int
-            listDataChild.put(listDataHeader.get(0), new Device("door1","door")); // Header, Child data
-            listDataChild.put(listDataHeader.get(1), new Device("refrigerator1","refrigerator"));
-            listDataChild.put(listDataHeader.get(2), new Device("oven1","oven"));
         }
     }
 

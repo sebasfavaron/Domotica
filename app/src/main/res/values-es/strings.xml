@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Domotica</string>
-    <string name="tab_text_1">Home</string>
+    <string name="tab_text_1">Inicio</string>
     <string name="tab_text_2">Dispositivos</string>
     <string name="tab_text_3">Rutinas</string>
     <string name="action_settings">Configuraciones</string>

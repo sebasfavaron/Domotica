@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Domotica</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Dispositivos</string>
+    <string name="tab_text_3">Rutinas</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="section_format">Hola Mundo from section: %1$d</string>
+</resources>

@@ -16,7 +16,24 @@ public class HomeFragment extends MainActivity.GeneralFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // get the listview
+        expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
+
+        // preparing list data
+        prepareListData();
+
+        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
         return rootView;
     }
+
+    private void prepareListData() {
+        // igual que en DeviceFragment pero con favoritos (filtrar con el meta)
+    }
+
+
 }

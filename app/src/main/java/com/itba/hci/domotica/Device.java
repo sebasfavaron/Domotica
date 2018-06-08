@@ -3,13 +3,11 @@ package com.itba.hci.domotica;
 public class Device {
     private String name;
     private String id;
-    private String type;
     private String typeId;
     private String meta;
 
     public Device(String name, String type){
         this.name = name;
-        this.type = type;
         this.typeId = Device.typeToId(type);
         this.meta = "";
     }
@@ -19,7 +17,7 @@ public class Device {
     }
 
     public String getType() {
-        return type;
+        return Device.idToType(typeId);
     }
 
     public static String typeToId(String type){

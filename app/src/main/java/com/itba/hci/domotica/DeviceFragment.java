@@ -33,6 +33,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
 
     private void prepareListData() {
         // Crear dispositivos segun lo que haya en la api
+        //todo: meter los dispositivos de la api aca
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");

@@ -1,5 +1,6 @@
 package com.itba.hci.domotica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,8 +8,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,6 +104,28 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         View view = inflater.inflate(R.layout.ac_content,null);
 
 
+
+        Spinner spinner = view.findViewById(R.id.add_device_type_spinner);
+        /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
+
+        List<String> selectionList = new ArrayList<>();
+        /*selectionList.add(context.getResources().getString(R.string.set_ac_mode_option1));
+        selectionList.add(context.getResources().getString(R.string.set_ac_mode_option2));
+        selectionList.add(context.getResources().getString(R.string.set_ac_mode_option3));
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, selectionList);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);*/
 
         return view;
     }

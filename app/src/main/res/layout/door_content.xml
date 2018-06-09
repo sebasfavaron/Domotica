@@ -11,6 +11,7 @@
         android:layout_height="wrap_content" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/door_open_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
@@ -32,6 +33,31 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@+id/door_switch"
             android:text="@string/open_text" />
+
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/door_open_block">
+        <TextView
+            android:id="@+id/door_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="@+id/door_lock_switch"
+            android:text="@string/door_lock" />
+
+        <Switch
+            android:id="@+id/door_lock_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/door_lock"
+            android:layout_toEndOf="@+id/door_lock" />
+
+        <TextView
+            android:id="@+id/door_unlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/door_lock_switch"
+            android:text="@string/door_unlock" />
 
     </android.support.constraint.ConstraintLayout>
 

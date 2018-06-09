@@ -65,10 +65,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                final AddDeviceFragment adf = new AddDeviceFragment();
-                adf.show(getFragmentManager(), "testAdd");
+                AddDeviceFragment adf = new AddDeviceFragment();
+                adf.show(getFragmentManager(), "add_device_fragment");
             }
         });
 

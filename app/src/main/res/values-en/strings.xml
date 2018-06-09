@@ -8,4 +8,23 @@
     <string name="section_format">Hello world from section: %1$d</string>
     <string name="open_text">Open</string>
     <string name="closed_text">Closed</string>
+    <string name="on_text">On</string>
+    <string name="off_text">Off</string>
+    <string name="up_text">Up</string>
+    <string name="down_text">Down</string>
+    <string name="state_text">State</string>
+    <string name="brightness_text">Set brightness</string>
+    <string name="set_color_header">Set color</string>
+    <string name="temperature_header">Set temperature</string>
+    <string name="set_mode_header">Set mode</string>
+    <string name="set_vertical_swing_header">Set vertical swing</string>
+    <string name="set_horizontal_swing_header">Set horizontal swing</string>
+    <string name="set_fan_speed_header">Set fan speed</string>
+    <string name="min_brightness">0</string>
+    <string name="max_brightness">100</string>
+    <string name="set_grill_header">Set grill type</string>
+    <string name="set_heat_header">Set heat direction</string>
+    <string name="set_convection_header">Set convection</string>
+    <string name="set_freezer_temperature_header">Set freezer temperature</string>
+    <string name="set_refrigerator_temperature_header">Set refrigerator temperature</string>
 </resources>

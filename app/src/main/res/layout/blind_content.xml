@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/door_title"
+        android:id="@+id/blind_state_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Blind" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/state_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/blind_up_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/up_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blind_state_text" />
+
     <Switch
-        android:id="@+id/door_switch"
+        android:id="@+id/blind_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOn="@string/open_text"
-        android:textOff="Closed"
-        android:showText="true"
-        app:layout_constraintTop_toBottomOf="@+id/door_title"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:textOff="Off"
+        android:textOn="On"
+        app:layout_constraintStart_toEndOf="@+id/blind_up_text"
+        app:layout_constraintTop_toBottomOf="@+id/blind_state_text" />
 
-    <Button
+    <TextView
+        android:id="@+id/blind_down_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/door_switch"/>
-
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/down_text"
+        app:layout_constraintStart_toEndOf="@+id/blind_switch"
+        app:layout_constraintTop_toBottomOf="@+id/blind_state_text" />
 </android.support.constraint.ConstraintLayout>

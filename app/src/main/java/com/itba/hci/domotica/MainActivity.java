@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                final AddDeviceFragment adf = new AddDeviceFragment();
+                adf.show(getFragmentManager(), "testAdd");
             }
         });
 
@@ -109,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, Device> listDataChild;
 
         public GeneralFragment() {
+            this.listDataHeader = new ArrayList<>();
+            this.listDataChild = new HashMap<>();
         }
 
         /**
@@ -133,27 +138,7 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            this.listDataHeader = new ArrayList<>();
-            this.listDataChild = new HashMap<>();
-
-            // get the listview
-            expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
-
-            // preparing list data
-            prepareListData();
-
-            listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
-
-            // setting list adapter
-            expListView.setAdapter(listAdapter);
             return rootView;
-        }
-
-        /*
-         * Preparing the list data
-         */
-        private void prepareListData() {
-
         }
     }
 

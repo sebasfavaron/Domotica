@@ -13,13 +13,13 @@ public class AddDeviceFragment extends DialogFragment {
 
     public AddDeviceFragment(){}
 
-    /*@Override
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.alarm_content, container);
+        View view = inflater.inflate(R.layout.add_device, container);
         //view.findViewById()
         return view;
-    }*/
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    }
+    /*public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Agregar dispositivo")
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
@@ -35,6 +35,6 @@ public class AddDeviceFragment extends DialogFragment {
                 });
         // Create the AlertDialog object and return it
         return builder.create();
-    }
+    }*/
 
 }

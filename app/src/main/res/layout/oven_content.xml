@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <Switch
-        android:id="@+id/switch3"
+        android:id="@+id/oven_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/off_text"
-        app:layout_constraintStart_toEndOf="@+id/switch3"
+        app:layout_constraintStart_toEndOf="@+id/oven_switch"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
@@ -57,12 +57,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/oven_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -73,19 +72,21 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@id/ac_temperature_seek_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <SeekBar
-        android:id="@+id/seekBar2"
+        android:id="@+id/oven_temperature_seek_bar"
         android:layout_width="182dp"
         android:layout_height="19dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView18"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:min="10"
+        android:max="200"
+        app:layout_constraintEnd_toStartOf="@id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
         android:id="@+id/textView18"
@@ -95,7 +96,7 @@
         android:layout_marginTop="16dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@id/oven_temperature" />
 
     <TextView
         android:id="@+id/textView19"
@@ -108,8 +109,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="360dp"
+        android:id="@+id/heatDirSpinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
@@ -125,11 +126,11 @@
         android:layout_marginTop="16dp"
         android:text="@string/set_grill_header"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/heatDirSpinner" />
 
     <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="360dp"
+        android:id="@+id/grill_type_spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@android:drawable/btn_dropdown"
@@ -145,11 +146,11 @@
         android:layout_marginTop="16dp"
         android:text="@string/set_convection_header"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        app:layout_constraintTop_toBottomOf="@+id/grill_type_spinner" />
 
     <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="360dp"
+        android:id="@+id/convection_spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/btn_dropdown"
         android:layout_marginStart="16dp"

@@ -73,4 +73,6 @@
     <string name="set_refrigerator_mode_option1">Default</string>
     <string name="set_refrigerator_mode_option2">Vacation</string>
     <string name="set_refrigerator_mode_option3">Party</string>
+    <string name="ac_max">32</string>
+    <string name="ac_min">10</string>
 </resources>

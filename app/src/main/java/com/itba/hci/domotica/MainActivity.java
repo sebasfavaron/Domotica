@@ -3,6 +3,8 @@ package com.itba.hci.domotica;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,7 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -60,6 +65,24 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        // Set up hamburguer menu
+        DrawerLayout drawerLayout = findViewById(R.id.left_drawer_layout);
+        ListView drawerListView = findViewById(R.id.left_drawer);
+        ActionBarDrawerToggle hamburguerIcon = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close){
+            public void OnDrawerClosed(View view){}
+        };
+        List<String> drawerList = new ArrayList<>();
+        drawerList.add("Thing1");
+        drawerList.add("Thing2");
+        drawerList.add("Thing3");
+        drawerListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,drawerList));
+        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //links a paginas de ayuda etc
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

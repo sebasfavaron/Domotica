@@ -74,4 +74,6 @@
     <string name="set_refrigerator_mode_option3">Party</string>
     <string name="ac_max">32</string>
     <string name="ac_min">10</string>
+    <string name="drawer_open">Opening drawer</string>
+    <string name="drawer_close">Closing drawer</string>
 </resources>

@@ -65,7 +65,6 @@ public class AddDeviceFragment extends DialogFragment {
 
                 //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
 
-
                 dismiss();
             }
         });

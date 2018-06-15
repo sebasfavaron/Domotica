@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,5 +63,15 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
         listDataChild.put(listDataHeader.get(5), o1);
         listDataChild.put(listDataHeader.get(6), r1);
         listDataChild.put(listDataHeader.get(7), t1);
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        Device dTest = new Device("test","lamp");
+                        listDataHeader.add(dTest.getName());
+                        listDataChild.put(listDataHeader.get(listDataHeader.size()-1), dTest);
+                        listAdapter.notifyDataSetChanged();
+                    }
+                },5000);
     }
 }

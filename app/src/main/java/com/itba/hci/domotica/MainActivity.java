@@ -28,6 +28,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -90,11 +93,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AddDeviceFragment adf = new AddDeviceFragment();
                 adf.show(getFragmentManager(), "add_device_fragment");
+
             }
         });
 
-    }
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask(){
+            @Override public void run(){
+                //Toast.makeText(getApplicationContext(), "asdasdasda",Toast.LENGTH_SHORT).show();
+            }
+            },0,5000);
+        //haces algun listener
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

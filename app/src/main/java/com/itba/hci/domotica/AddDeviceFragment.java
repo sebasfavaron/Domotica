@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ public class AddDeviceFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.add_device, container);
 
-        final EditText editText = view.findViewById(R.id.add_device_name_field);
+        //final EditText editText = view.findViewById(R.id.add_device_name_field);
 
         Spinner spinner = view.findViewById(R.id.add_device_type_spinner);
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -57,12 +60,24 @@ public class AddDeviceFragment extends DialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, deviceTypes);
         spinner.setAdapter(adapter);
 
+        final TextInputLayout til = (TextInputLayout) view.findViewById(R.id.add_device_layout);
+        til.setHint("Device Name");
+
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deviceName = editText.getText().toString();
+                // hideKeyboard();
 
+                deviceName = til.getEditText().getText().toString();
+                //deviceName = editText.getText().toString();
+                if (!validLenght(deviceName)){
+                    //editText.setError("Longitud menor a 3");
+                    til.setError("Logitud debe ser mayor a 3");
+                    return;
+                } else {
+                    til.setErrorEnabled(false);
+                }
                 //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
 
                 dismiss();
@@ -70,7 +85,7 @@ public class AddDeviceFragment extends DialogFragment {
         });
 
         Button cancelButton = view.findViewById(R.id.cancel_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -79,6 +94,21 @@ public class AddDeviceFragment extends DialogFragment {
 
         return view;
     }
+
+    public boolean validLenght(String deviceName)
+    {
+        return deviceName.length() > 3;
+    }
+
+    /*private void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+    */
+
     /*public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Agregar dispositivo")

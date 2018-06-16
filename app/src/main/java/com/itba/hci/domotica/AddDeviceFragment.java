@@ -3,10 +3,12 @@ package com.itba.hci.domotica;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,16 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +38,12 @@ public class AddDeviceFragment extends DialogFragment {
 
     private String deviceName;
     private String deviceType;
+    //private Context context;
+    private String requestTag;
 
-    public AddDeviceFragment(){}
+    public AddDeviceFragment(){
+        //this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -35,7 +51,7 @@ public class AddDeviceFragment extends DialogFragment {
 
         //final EditText editText = view.findViewById(R.id.add_device_name_field);
 
-        Spinner spinner = view.findViewById(R.id.add_device_type_spinner);
+        final Spinner spinner = view.findViewById(R.id.add_device_type_spinner);
         AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -71,14 +87,31 @@ public class AddDeviceFragment extends DialogFragment {
 
                 deviceName = til.getEditText().getText().toString();
                 //deviceName = editText.getText().toString();
-                if (!validLenght(deviceName)){
+                if (!validLenght(deviceName)) {
                     //editText.setError("Longitud menor a 3");
                     til.setError("Logitud debe ser mayor a 3");
                     return;
                 } else {
                     til.setErrorEnabled(false);
                 }
+                //Device device = new Device(deviceName, Aca va el id del objeto)
                 //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
+
+                /*
+                requestTag = Api.getInstance(context).addDevice(device, new Response.Listener<Device>() {
+                    @Override
+                    public void onResponse(Device response) {
+                        device.setId(response.getId());
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        handlerError(error);
+                    }
+                });
+                */
+
 
                 dismiss();
             }
@@ -127,4 +160,31 @@ public class AddDeviceFragment extends DialogFragment {
         return builder.create();
     }*/
 
+    private void handleError(VolleyError error) {
+        Error response = null;
+
+        NetworkResponse networkResponse = error.networkResponse;
+        if ((networkResponse != null) && (error.networkResponse.data != null)) {
+            try {
+                String json = new String(
+                        error.networkResponse.data,
+                        HttpHeaderParser.parseCharset(networkResponse.headers));
+
+                JSONObject jsonObject = new JSONObject(json);
+                json = jsonObject.getJSONObject("error").toString();
+
+                Gson gson = new Gson();
+                response = gson.fromJson(json, Error.class);
+            } catch (JSONException e) {
+            } catch (UnsupportedEncodingException e) {
+            }
+        }
+
+        //Log.e(LOG_TAG, error.toString());
+        String text = getResources().getString(R.string.error_message);
+        if (response != null)
+            text += " " + response.getDescription().get(0);
+
+        //Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+    }
 }

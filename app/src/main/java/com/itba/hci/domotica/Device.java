@@ -16,9 +16,19 @@ public class Device {
         return name;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getMeta() {
+        return meta;
+    }
+
     public String getType() {
         return Device.idToType(typeId);
     }
+
+    public void setId(String id) { this.id = id; }
 
     public static String typeToId(String type){
         switch (type) {

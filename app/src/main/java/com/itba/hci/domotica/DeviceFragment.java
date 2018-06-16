@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 public class DeviceFragment extends MainActivity.GeneralFragment {
     public DeviceFragment() {
@@ -32,6 +33,10 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
     private void prepareListData() {
         // Crear dispositivos segun lo que haya en la api
         //todo: meter los dispositivos de la api aca
+
+
+
+
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");
@@ -52,22 +57,22 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
         deviceListDataHeader.add(t1.getName());
 
         // Agregar (nombre -> dispositivo) al hashmap
-        deviceListDataChild.put(deviceListDataHeader.get(0), ac1); // Header, Child data
-        deviceListDataChild.put(deviceListDataHeader.get(1), al1);
-        deviceListDataChild.put(deviceListDataHeader.get(2), b1);
-        deviceListDataChild.put(deviceListDataHeader.get(3), d1);
-        deviceListDataChild.put(deviceListDataHeader.get(4), l1);
-        deviceListDataChild.put(deviceListDataHeader.get(5), o1);
-        deviceListDataChild.put(deviceListDataHeader.get(6), r1);
-        deviceListDataChild.put(deviceListDataHeader.get(7), t1);
+        listDataChild.put(listDataHeader.get(0), ac1); // Header, Child data
+        listDataChild.put(listDataHeader.get(1), al1);
+        listDataChild.put(listDataHeader.get(2), b1);
+        listDataChild.put(listDataHeader.get(3), d1);
+        listDataChild.put(listDataHeader.get(4), l1);
+        listDataChild.put(listDataHeader.get(5), o1);
+        listDataChild.put(listDataHeader.get(6), r1);
+        listDataChild.put(listDataHeader.get(7), t1);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         Device dTest = new Device("test","lamp");
-                        deviceListDataHeader.add(dTest.getName());
-                        deviceListDataChild.put(deviceListDataHeader.get(deviceListDataHeader.size()-1), dTest);
-                        deviceListAdapter.notifyDataSetChanged();
+                        listDataHeader.add(dTest.getName());
+                        listDataChild.put(listDataHeader.get(listDataHeader.size()-1), dTest);
+                        listAdapter.notifyDataSetChanged();
                     }
                 },5000);
     }

@@ -75,4 +75,5 @@
     <string name="set_refrigerator_mode_option3">Fiesta</string>
     <string name="ac_max">32</string>
     <string name="ac_min">10</string>
+    <string name="error_message">Algo ha salido mal:</string>
 </resources>

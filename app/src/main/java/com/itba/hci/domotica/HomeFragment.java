@@ -1,33 +1,31 @@
 package com.itba.hci.domotica;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HomeFragment extends MainActivity.GeneralFragment {
     public HomeFragment() {
         super();
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // get the listview
+        /*// get the listview
         expListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
         // preparing list data
         prepareListData();
 
-        listAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+        listAdapter = new DeviceExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
 
         // setting list adapter
-        expListView.setAdapter(listAdapter);
+        expListView.setAdapter(listAdapter);*/
         return rootView;
     }
 

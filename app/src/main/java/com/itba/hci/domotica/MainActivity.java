@@ -1,8 +1,8 @@
 package com.itba.hci.domotica;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -90,11 +90,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AddDeviceFragment adf = new AddDeviceFragment();
                 adf.show(getFragmentManager(), "add_device_fragment");
+
             }
         });
 
-    }
+        /*Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask(){
+            @Override public void run(){
+                //Toast.makeText(getApplicationContext(), "asdasdasda",Toast.LENGTH_SHORT).show();
+            }
+            },0,5000);*/
+        //haces algun listener
 
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,14 +135,20 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        ExpandableListAdapter listAdapter;
-        ExpandableListView expListView;
-        List<String> listDataHeader;
-        HashMap<String, Device> listDataChild;
+        DeviceExpandableListAdapter deviceListAdapter;
+        RoutineExpandableListAdapter routineListAdapter;
+        ExpandableListView deviceExpListView;
+        ExpandableListView routineExpListView;
+        List<String> deviceListDataHeader;
+        List<String> routineListDataHeader;
+        HashMap<String, Device> deviceListDataChild;
+        HashMap<String, Routine> routineListDataChild;
 
         public GeneralFragment() {
-            this.listDataHeader = new ArrayList<>();
-            this.listDataChild = new HashMap<>();
+            this.deviceListDataHeader = new ArrayList<>();
+            this.deviceListDataChild = new HashMap<>();
+            this.routineListDataHeader = new ArrayList<>();
+            this.routineListDataChild = new HashMap<>();
         }
 
         /**
@@ -156,10 +170,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.fragment_main, container, false);
         }
     }
 

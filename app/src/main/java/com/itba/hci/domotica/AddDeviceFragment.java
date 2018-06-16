@@ -65,13 +65,12 @@ public class AddDeviceFragment extends DialogFragment {
 
                 //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
 
-
                 dismiss();
             }
         });
 
         Button cancelButton = view.findViewById(R.id.cancel_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();

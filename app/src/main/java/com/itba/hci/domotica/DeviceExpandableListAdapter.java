@@ -21,18 +21,19 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+
+public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listDataHeader; // nombreDeDisp
-
     private HashMap<String, Device> listDataChild; // nombreDeDisp -> dispositivo
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, Device> listDataChild) {
+    public DeviceExpandableListAdapter(Context context, List<String> listDataHeader,
+                                       HashMap<String, Device> listDataChild) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listDataChild;
+
     }
 
     @Override
@@ -73,7 +74,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.item_header,null); //item_header lo que muestra la lista de dispositivos
+        if(inflater == null) {
+            //todo: error nuestro que hay que notificarle al usuario. No se va a ver la lista
+            return view;
+        }
+
+        view = inflater.inflate(R.layout.item_header,null); //item_header es la cosa antes de expandir
 
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());
@@ -84,11 +90,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(inflater == null) return view;
+        if(inflater == null) {
+            //todo: error nuestro que hay que notificarle al usuario. No se va a ver el elemento
+            return view;
+        }
 
         Device device = listDataChild.get(listDataHeader.get(i));
 
         switch (listDataChild.get(listDataHeader.get(i)).getType()){
+            // Devices
             case "ac": view = prepareAC(device, inflater); break;
             case "alarm": view = prepareAlarm(device, inflater); break;
             case "blind": view = prepareBlind(device, inflater); break;
@@ -99,7 +109,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             case "timer": view = prepareTimer(device, inflater); break;
             default: view = inflater.inflate(R.layout.default_item_content,null);
         }
-
 
         return view;
     }

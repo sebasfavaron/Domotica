@@ -214,7 +214,7 @@ public class AddDeviceFragment extends DialogFragment {
         if (response != null)
             text += " " + response.getDescription().get(0);
 
-        //Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
 }

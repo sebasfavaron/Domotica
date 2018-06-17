@@ -1,16 +1,21 @@
 package com.itba.hci.domotica;
 
+import android.content.Context;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +26,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
     private ExpandableListView deviceExpListView;
     private ArrayList<String> deviceListDataHeader;
     private HashMap<String,Device> deviceListDataChild;
-
+    private String requestTag;
     public DeviceFragment() {
         super();
     }
@@ -78,6 +83,24 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
 
     private void prepareListData() {
         // Crear dispositivos segun lo que haya en la api
+
+
+        //todo: meter los dispositivos de la api aca
+        /*
+        requestTag = Api.getInstance(getContext()).getDevices(new Response.Listener<GetDevicesResponse>() {
+            @Override
+            public void onResponse(GetDevicesResponse response) {
+                //Aca se agregaria response.getDevices();
+                //Aca se agregan los dispositivos
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+                Toast.makeText(MainActivity.this, R.string.error_message, Toast.LENGTH_LONG).show();
+            }
+        });
+        */
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");

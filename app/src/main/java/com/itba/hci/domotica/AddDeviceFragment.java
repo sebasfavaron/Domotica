@@ -1,5 +1,6 @@
 package com.itba.hci.domotica;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -35,19 +36,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddDeviceFragment extends DialogFragment {
-
+    private MainActivity mainActivity;
     private String deviceName;
     private String deviceType;
-    //private Context context;
+    private Context context;
     private String requestTag;
+    private Device device;
 
     public AddDeviceFragment(){
-        //this.context = context;
+        this.device = null;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.add_device, container);
+        getDialog().setTitle(getString(R.string.add_device));
 
         //final EditText editText = view.findViewById(R.id.add_device_name_field);
 
@@ -86,6 +89,7 @@ public class AddDeviceFragment extends DialogFragment {
                 // hideKeyboard();
 
                 deviceName = til.getEditText().getText().toString();
+
                 //deviceName = editText.getText().toString();
                 if (!validLength(deviceName)) {
                     //editText.setError("Longitud menor a 3");
@@ -94,24 +98,32 @@ public class AddDeviceFragment extends DialogFragment {
                 } else {
                     til.setErrorEnabled(false);
                 }
-                //Device device = new Device(deviceName, Aca va el id del objeto)
+
+                deviceType = Device.translateEsToEn(deviceType);
+
+                Log.d("tag", Device.translateEsToEn(deviceType));
+                Log.d("tag",deviceName);
+
+                device = new Device(deviceName,deviceType);
                 //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
 
-                /*
+
                 requestTag = Api.getInstance(context).addDevice(device, new Response.Listener<Device>() {
                     @Override
                     public void onResponse(Device response) {
                         device.setId(response.getId());
+                        Log.d("tag", "Api is working. Device Id = ");
+                        Log.d("tag", response.getId());
+
                     }
 
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        handlerError(error);
+                        Log.d("tag", "Api is not working. Device Id = ");
+                        handleError(error);
                     }
                 });
-                */
-
 
                 dismiss();
             }
@@ -127,6 +139,29 @@ public class AddDeviceFragment extends DialogFragment {
 
         return view;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            try {
+                mainActivity = (MainActivity) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement OnHeadlineSelectedListener");
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
 
     public boolean validLength(String deviceName)
     {
@@ -180,11 +215,12 @@ public class AddDeviceFragment extends DialogFragment {
             }
         }
 
-        //Log.e(LOG_TAG, error.toString());
+        Log.e("tag", error.toString());
         String text = getResources().getString(R.string.error_message);
         if (response != null)
             text += " " + response.getDescription().get(0);
 
-        //Toast.makeText(MainActivity.this, text, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
+
 }

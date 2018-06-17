@@ -36,6 +36,8 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         listDataChild = new HashMap<>();
         listDataHeader = new ArrayList<>();
 
+        if(deviceHashMap == null) return;
+
         //todo: filtrar para que sean los favoritos y no haya mas que MAX
         for(String deviceName : deviceHashMap.keySet()){
             if(listDataChild.size() >= MAX) break;

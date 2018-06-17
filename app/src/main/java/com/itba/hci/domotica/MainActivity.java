@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         routineListDataChild = new HashMap<>();
 
         MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
+        model.setAppContext(this);
         model.getDeviceMap().observe(this, new Observer<HashMap<String, Device>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {

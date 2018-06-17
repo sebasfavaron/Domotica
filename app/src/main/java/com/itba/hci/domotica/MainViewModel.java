@@ -3,6 +3,13 @@ package com.itba.hci.domotica;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +19,7 @@ public class MainViewModel extends ViewModel {
     private MutableLiveData<HashMap<String,Routine>> routineListDataChild;
     private List<String> deviceListDataHeader;
     private List<String> routineListDataHeader;
+    private Context appContext;
     public MutableLiveData<Integer> i;
 
     public LiveData<HashMap<String, Device>> getDeviceMap() {
@@ -23,8 +31,13 @@ public class MainViewModel extends ViewModel {
         return deviceListDataChild;
     }
 
-    public void addDevice(){
+    public void setAppContext(Context context){
+        appContext = context;
+    }
 
+    public void addDevice(){
+        // le pasan a este metodo los datos de la api y aca se agrega a la api y a la deviceListDataChild
+        // como se modifico deviceListDataChild se deberian activar los listeners de cada fragmento y actualizar los adapters
     }
 
     public LiveData<HashMap<String, Routine>> getRoutineMap() {
@@ -38,6 +51,20 @@ public class MainViewModel extends ViewModel {
 
     private void loadDeviceMap(){
         deviceListDataChild.setValue(new HashMap<String, Device>());
+
+        String requestTag = Api.getInstance(appContext).getDevices(new Response.Listener<GetDevicesResponse>() {
+            @Override
+            public void onResponse(GetDevicesResponse response) {
+                //Aca se agregaria response.getDevices();
+                //Aca se agregan los dispositivos
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+                Toast.makeText(appContext, R.string.error_message, Toast.LENGTH_LONG).show();
+            }
+        });
 
         // Crear dispositivos segun lo que haya en la api
         //todo: meter los dispositivos de la api aca

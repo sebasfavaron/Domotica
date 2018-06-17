@@ -1,5 +1,7 @@
 package com.itba.hci.domotica;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -54,6 +56,7 @@ public class GsonRequest<T1, T2> extends Request<T2> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+            Log.d("tag",json);
 
             if (token != null) {
                 JSONObject jsonObject = new JSONObject(json);

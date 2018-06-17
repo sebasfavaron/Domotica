@@ -27,6 +27,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
     private ArrayList<String> deviceListDataHeader;
     private HashMap<String,Device> deviceListDataChild;
     private String requestTag;
+
     public DeviceFragment() {
         super();
     }
@@ -86,7 +87,6 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
 
 
         //todo: meter los dispositivos de la api aca
-        /*
         requestTag = Api.getInstance(getContext()).getDevices(new Response.Listener<GetDevicesResponse>() {
             @Override
             public void onResponse(GetDevicesResponse response) {
@@ -97,10 +97,9 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("tag", error.toString());
-                Toast.makeText(MainActivity.this, R.string.error_message, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_LONG).show();
             }
         });
-        */
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");

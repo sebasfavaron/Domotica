@@ -62,7 +62,7 @@ public class Api {
         return uuid;
     }
 
-    public String getDevices(Response.Listener<GetDevicesResponseDevice> listener, Response.ErrorListener errorListener) {
+    public String getDevices(Response.Listener<GetDevicesResponse> listener, Response.ErrorListener errorListener) {
         String url = URL + "devices/";
         GsonRequest<Object, GetDevicesResponse> request =
                 new GsonRequest<Object, GetDevicesResponse>(Request.Method.GET, url, null, "devices", GetDevicesResponse.class, null, listener, errorListener);

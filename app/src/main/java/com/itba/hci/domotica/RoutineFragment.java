@@ -2,6 +2,7 @@ package com.itba.hci.domotica;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +10,36 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class RoutineFragment extends MainActivity.GeneralFragment {
+    private RoutineExpandableListAdapter routineListAdapter;
+    private ExpandableListView routineExpListView;
+    private ArrayList<String> routineListDataHeader;
+    private HashMap<String, Routine> routineListDataChild;
+    private boolean firstRun;
+
     public RoutineFragment() {
         super();
+        firstRun = true;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        routineListDataHeader = getArguments().getStringArrayList("routineListDataHeader");
+        routineListDataChild = (HashMap<String, Routine>) getArguments().getSerializable("routineListDataChild");
+        if(routineListDataChild == null || routineListDataHeader == null)
+            Snackbar.make(rootView,"Error initiating app", Snackbar.LENGTH_LONG);
+
         // get the listview
         routineExpListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
         prepareListData();
+        firstRun = false;
 
         routineListAdapter = new RoutineExpandableListAdapter(getActivity(), routineListDataHeader, routineListDataChild);
 
@@ -33,8 +49,10 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
     }
 
     private void prepareListData() {
+        if(!firstRun) return; //patch a un problema de ejecucion multiple de onCreateView
+
         // Crear rutinas
-        Routine r1 = new Routine("rutina1", "1234", randomActionList());
+        Routine r1 = new Routine("rutina"+Math.random(), "1234", randomActionList());
 
         // Meter los nombres en la lista de headers
         routineListDataHeader.add(r1.getName());
@@ -55,8 +73,16 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
 
     private ArrayList<Action> randomActionList() {
         ArrayList<Action> actions = new ArrayList<>();
+
+        ArrayList<String> deviceListDataHeader = getArguments().getStringArrayList("deviceListDataHeader");
+        HashMap<String,Device> deviceListDataChild = (HashMap<String, Device>) getArguments().getSerializable("deviceListDataChild");
+        if(deviceListDataChild == null || deviceListDataHeader == null) {
+            Snackbar.make(getView(), "Error initiating app", Snackbar.LENGTH_LONG);
+            return actions;
+        }
+
         if(deviceListDataHeader.isEmpty()) {
-            Toast.makeText(getContext(),"no hay devices todavia",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),"----- no hay devices todavia -----",Toast.LENGTH_LONG).show();
             return actions;
         }
         int amount = (int) (Math.random() * 5);

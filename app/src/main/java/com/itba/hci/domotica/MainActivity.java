@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private static ArrayList<String> deviceListDataHeader;
+    private static ArrayList<String> routineListDataHeader;
+    private static HashMap<String, Device> deviceListDataChild;
+    private static HashMap<String, Routine> routineListDataChild;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,23 +74,11 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        // Set up hamburguer menu
-        DrawerLayout drawerLayout = findViewById(R.id.left_drawer_layout);
-        ListView drawerListView = findViewById(R.id.left_drawer);
-        ActionBarDrawerToggle hamburguerIcon = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close){
-            public void OnDrawerClosed(View view){}
-        };
-        List<String> drawerList = new ArrayList<>();
-        drawerList.add("Thing1");
-        drawerList.add("Thing2");
-        drawerList.add("Thing3");
-        drawerListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,drawerList));
-        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //links a paginas de ayuda etc
-            }
-        });
+        //Instantiate Lists and Maps
+        deviceListDataHeader = new ArrayList<>();
+        deviceListDataChild = new HashMap<>();
+        routineListDataHeader = new ArrayList<>();
+        routineListDataChild = new HashMap<>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -138,21 +131,8 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        DeviceExpandableListAdapter deviceListAdapter;
-        RoutineExpandableListAdapter routineListAdapter;
-        ExpandableListView deviceExpListView;
-        ExpandableListView routineExpListView;
-        List<String> deviceListDataHeader;
-        List<String> routineListDataHeader;
-        HashMap<String, Device> deviceListDataChild;
-        HashMap<String, Routine> routineListDataChild;
 
-        public GeneralFragment() {
-            this.deviceListDataHeader = new ArrayList<>();
-            this.deviceListDataChild = new HashMap<>();
-            this.routineListDataHeader = new ArrayList<>();
-            this.routineListDataChild = new HashMap<>();
-        }
+        public GeneralFragment() {}
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -168,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new RoutineFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putStringArrayList("deviceListDataHeader", deviceListDataHeader);
+            args.putStringArrayList("routineListDataHeader", routineListDataHeader);
+            args.putSerializable("deviceListDataChild", deviceListDataChild);
+            args.putSerializable("routineListDataChild", routineListDataChild);
             fragment.setArguments(args);
             return fragment;
         }

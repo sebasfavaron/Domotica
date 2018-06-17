@@ -87,7 +87,7 @@ public class AddDeviceFragment extends DialogFragment {
 
                 deviceName = til.getEditText().getText().toString();
                 //deviceName = editText.getText().toString();
-                if (!validLenght(deviceName)) {
+                if (!validLength(deviceName)) {
                     //editText.setError("Longitud menor a 3");
                     til.setError("Logitud debe ser mayor a 3");
                     return;
@@ -128,7 +128,7 @@ public class AddDeviceFragment extends DialogFragment {
         return view;
     }
 
-    public boolean validLenght(String deviceName)
+    public boolean validLength(String deviceName)
     {
         return deviceName.length() > 3;
     }

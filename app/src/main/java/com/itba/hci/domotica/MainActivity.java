@@ -1,7 +1,11 @@
 package com.itba.hci.domotica;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         deviceListDataChild = new HashMap<>();
         routineListDataHeader = new ArrayList<>();
         routineListDataChild = new HashMap<>();
+
+        MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
+        model.getDeviceMap().observe(this, new Observer<HashMap<String, Device>>() {
+            @Override
+            public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
+                Toast.makeText(getApplicationContext(),"Wow cambio",Toast.LENGTH_LONG).show();
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

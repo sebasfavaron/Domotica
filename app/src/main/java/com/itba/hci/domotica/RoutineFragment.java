@@ -1,7 +1,10 @@
 package com.itba.hci.domotica;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,27 +22,43 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
     private ExpandableListView routineExpListView;
     private ArrayList<String> routineListDataHeader;
     private HashMap<String, Routine> routineListDataChild;
-    private boolean firstRun;
 
     public RoutineFragment() {
         super();
-        firstRun = true;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        routineListDataHeader = getArguments().getStringArrayList("routineListDataHeader");
-        routineListDataChild = (HashMap<String, Routine>) getArguments().getSerializable("routineListDataChild");
-        if(routineListDataChild == null || routineListDataHeader == null)
-            Snackbar.make(rootView,"Error initiating app", Snackbar.LENGTH_LONG);
+        routineListDataHeader = new ArrayList<>();
+        routineListDataChild = new HashMap<>();
 
         // get the listview
         routineExpListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
-        prepareListData();
-        firstRun = false;
+        // listeners for when data in devices changes
+        MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        model.getRoutineMap().observe(getActivity(), new Observer<HashMap<String, Routine>>() {
+            @Override
+            public void onChanged(@Nullable HashMap<String, Routine> stringRoutineHashMap) {
+                // Esto actualiza la lista de dispositivos cada vez que cambia la lista en el ViewModel
+                routineListDataChild = stringRoutineHashMap;
+                routineListDataHeader = new ArrayList<>();
+                routineListDataHeader.addAll(routineListDataChild.keySet());
+                if(routineListAdapter != null) routineListAdapter.notifyDataSetChanged();
+            }
+        });
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        Routine r1 = new Routine("rutina_homee"+Math.random(), "1234", new ArrayList<Action>());
+                        routineListDataHeader.add(r1.getName());
+                        routineListDataChild.put(routineListDataHeader.get(routineListDataHeader.size()-1), r1);
+                        routineListAdapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), (routineListAdapter.routineSize()).toString()+"(rutina)", Toast.LENGTH_LONG).show();
+                    }
+                },7000);
 
         routineListAdapter = new RoutineExpandableListAdapter(getActivity(), routineListDataHeader, routineListDataChild);
 
@@ -49,8 +68,6 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
     }
 
     private void prepareListData() {
-        if(!firstRun) return; //patch a un problema de ejecucion multiple de onCreateView
-
         // Crear rutinas
         Routine r1 = new Routine("rutina"+Math.random(), "1234", randomActionList());
 
@@ -82,7 +99,6 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
         }
 
         if(deviceListDataHeader.isEmpty()) {
-            Toast.makeText(getContext(),"----- no hay devices todavia -----",Toast.LENGTH_LONG).show();
             return actions;
         }
         int amount = (int) (Math.random() * 5);

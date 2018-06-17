@@ -1,7 +1,10 @@
 package com.itba.hci.domotica;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,41 +21,63 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
     private ExpandableListView deviceExpListView;
     private ArrayList<String> deviceListDataHeader;
     private HashMap<String,Device> deviceListDataChild;
-    private boolean firstRun;
 
     public DeviceFragment() {
         super();
-        firstRun = true;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        deviceListDataHeader = getArguments().getStringArrayList("deviceListDataHeader");
-        deviceListDataChild = (HashMap<String, Device>) getArguments().getSerializable("deviceListDataChild");
-        if(deviceListDataChild == null || deviceListDataHeader == null)
-            Snackbar.make(rootView,"Error initiating app", Snackbar.LENGTH_LONG);
+        deviceListDataHeader = new ArrayList<>();
+        deviceListDataChild = new HashMap<>();
 
         // get the listview
         deviceExpListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
-        // preparing list data
-        prepareListData();
-        firstRun = false;
+        // listeners for when data in routines changes
+        MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        model.getDeviceMap().observe(getActivity(), new Observer<HashMap<String, Device>>() {
+            @Override
+            public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
+                // Esto actualiza la lista de dispositivos cada vez que cambia la lista en el ViewModel
+                deviceListDataChild = stringDeviceHashMap;
+                deviceListDataHeader = new ArrayList<>();
+                deviceListDataHeader.addAll(deviceListDataChild.keySet());
+                Toast.makeText(getContext(), ((Integer)deviceListDataChild.size()).toString(), Toast.LENGTH_LONG).show();
+                if(deviceListAdapter != null) deviceListAdapter.notifyDataSetChanged();
+            }
+        });
 
         deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
 
         // setting list adapter
         deviceExpListView.setAdapter(deviceListAdapter);
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        Device dTest = new Device("test","lamp");
+                        deviceListDataHeader.add(dTest.getName());
+                        deviceListDataChild.put(deviceListDataHeader.get(deviceListDataHeader.size()-1), dTest);
+                        deviceListAdapter.notifyDataSetChanged();
+                        Toast.makeText(getContext(), ((Integer)deviceListDataChild.size()).toString()+"(2)", Toast.LENGTH_LONG).show();
+                    }
+                },5000);
+
+        /*new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        deviceListAdapter.notifyDataSetChanged();
+                    }
+                },15000);*/
+
         return rootView;
     }
 
     private void prepareListData() {
-        if(!firstRun) return; //patch a un problema de ejecucion multiple de onCreateView
-
         // Crear dispositivos segun lo que haya en la api
-        //todo: meter los dispositivos de la api aca
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");

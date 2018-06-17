@@ -85,7 +85,7 @@ public class FavRoutineExpandableListAdapter extends BaseExpandableListAdapter{
             return view;
         }
 
-        view = inflater.inflate(R.layout.item_header,null); //item_header es la cosa antes de expandir
+        view = inflater.inflate(R.layout.routine_header,null); //item_header es la cosa antes de expandir
 
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());

@@ -57,6 +57,10 @@ public class RoutineExpandableListAdapter extends BaseExpandableListAdapter{
         return true;
     }
 
+    public Integer routineSize(){
+        return listDataChild.size();
+    }
+
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,7 +69,7 @@ public class RoutineExpandableListAdapter extends BaseExpandableListAdapter{
             return view;
         }
 
-        view = inflater.inflate(R.layout.item_header,null); //item_header es la cosa antes de expandir
+        view = inflater.inflate(R.layout.routine_header,null); //item_header es la cosa antes de expandir
 
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());

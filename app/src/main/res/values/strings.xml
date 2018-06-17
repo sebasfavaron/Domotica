@@ -76,4 +76,5 @@
     <string name="ac_min">10</string>
     <string name="drawer_open">Opening drawer</string>
     <string name="drawer_close">Closing drawer</string>
+
 </resources>

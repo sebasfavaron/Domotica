@@ -62,6 +62,16 @@ public class Api {
         return uuid;
     }
 
+    public String getDevices(Response.Listener<Device> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/";
+        GsonRequest<Object, Device> request =
+                new GsonRequest<Object, Device>(Request.Method.GET, url, null, "devices", Device.class, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
     /*
     public String addRoom(Room room, Response.Listener<Room> listener, Response.ErrorListener errorListener) {
         String url = URL + "rooms";

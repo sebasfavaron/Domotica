@@ -157,6 +157,12 @@ public class AddDeviceFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+
     public boolean validLength(String deviceName)
     {
         return deviceName.length() > 3;

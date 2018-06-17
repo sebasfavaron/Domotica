@@ -12,6 +12,13 @@ public class Device {
         this.meta = "{}";
     }
 
+    public Device(String name, String id, String typeId, String meta){
+        this.name = name;
+        this.id = id;
+        this.typeId = typeId;
+        this.meta = meta;
+    }
+
     public String getName() {
         return name;
     }
@@ -28,7 +35,23 @@ public class Device {
         return Device.idToType(typeId);
     }
 
+    public String getTypeId() {
+        return typeId;
+    }
+
     public void setId(String id) { this.id = id; }
+
+    public void setMeta(String meta) {
+        this.meta = meta;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
 
     public static String typeToId(String type){
         switch (type) {

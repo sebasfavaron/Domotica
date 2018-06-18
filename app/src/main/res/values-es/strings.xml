@@ -76,5 +76,6 @@
     <string name="ac_max">32</string>
     <string name="ac_min">10</string>
     <string name="error_message">Algo ha salido mal:</string>
+    <string name="action_update">Actualizar</string>
 
 </resources>

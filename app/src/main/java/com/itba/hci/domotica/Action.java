@@ -7,7 +7,6 @@ class Action {
     private String actionName;
     private ArrayList<String> params;
     private String meta;
-    // todo: ver como decirle que accion realiza en el dispositivo
 
     public Action(String deviceId, String actionName, String[] params) {
         this.deviceId = deviceId;

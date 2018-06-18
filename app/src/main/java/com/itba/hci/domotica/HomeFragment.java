@@ -33,11 +33,8 @@ public class HomeFragment extends MainActivity.GeneralFragment {
     private LiveData<HashMap<String, Device>> deviceLiveData;
     private LiveData<ArrayList<Routine>> routineLiveData;
 
-    private boolean firstRun;
-
     public HomeFragment() {
         super();
-        firstRun = true;
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

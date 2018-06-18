@@ -234,10 +234,31 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         // Mode
-        Spinner modeSpinner = (Spinner) view.findViewById(R.id.ac_mode_bar);
+        final Spinner modeSpinner = (Spinner) view.findViewById(R.id.ac_mode_bar);
         modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("tag", modeSpinner.getChildAt(position).toString());
+                String body = "[]";
+                /*
+                String requestTag = Api.getInstance(context).deviceAction(device,"setMode",body,new Response.Listener<Boolean>() {
+
+                    @Override
+                    public void onResponse(Boolean response) {
+                        //Toast.makeText(context,"").show();
+                        lastTemperature[0] = seekBar.getProgress();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //todo Agregar SnackBar, que no se cambio
+                        Log.e("tag", error.toString());
+                        seekBar.setProgress(lastTemperature[0]);
+                        TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
+                        tempText.setText(String.valueOf(lastTemperature[0]));
+                    }
+                });
+                */
                 //todo: actualizar modo de ac en la api
             }
 

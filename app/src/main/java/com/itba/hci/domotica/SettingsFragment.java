@@ -20,8 +20,8 @@ public class SettingsFragment extends DialogFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settings, container);
-        Switch notificationSwitch = (Switch) view.findViewById(R.id.EnableDeviceNotificationSwitch);
-        Switch routineSwitch = (Switch) view.findViewById(R.id.EnableRoutineNotificationDevice);
+        Switch notificationSwitch = (Switch) view.findViewById(R.id.enable_device_notification_switch);
+        Switch routineSwitch = (Switch) view.findViewById(R.id.);
         notificationSwitch.setChecked(true);
         routineSwitch.setChecked(true);
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

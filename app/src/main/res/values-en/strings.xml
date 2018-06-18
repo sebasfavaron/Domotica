@@ -75,6 +75,7 @@
     <string name="set_refrigerator_mode_option3">Party</string>
     <string name="ac_max">32</string>
     <string name="ac_min">10</string>
-    <string name="error_message">Something went wrong</string>
     <string name="conection_error">Can\'t connect to the database at the moment. Please try again later</string>
+    <string name="error_message">Something went wrong:</string>
+    <string name="action_update">Update</string>
 </resources>

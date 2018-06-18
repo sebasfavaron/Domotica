@@ -71,8 +71,7 @@ public class Api {
         headers.put("Content-Type", "application/json");
         GsonRequest<String,Boolean> request =
                 new GsonRequest<String,Boolean>
-                        (Request.Method.PUT,url,body,"result",
-                                Boolean.class,headers,listener,errorListener);
+                        (Request.Method.PUT,url,body,"result", Boolean.class,headers,listener,errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);
@@ -92,6 +91,39 @@ public class Api {
         return uuid;
     }
 
+    public String getRoutines(Response.Listener<GetRoutineResponse> listener, Response.ErrorListener errorListener){
+        String url = URL + "routines/";
+        GsonRequest<Object, GetRoutineResponse> request =
+                new GsonRequest<Object, GetRoutineResponse>
+                        (Request.Method.GET, url, null, null,
+                                GetRoutineResponse.class,null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String executeRoutine(Routine routine, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + routine.getId() + "/execute/";
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<String,Boolean> request =
+                new GsonRequest<String,Boolean>
+                        (Request.Method.PUT,url,"{}","result", Boolean.class,headers,listener,errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public static Api getInstance() {
+        return instance;
+    }
 
     /*
     public String addRoom(Room room, Response.Listener<Room> listener, Response.ErrorListener errorListener) {

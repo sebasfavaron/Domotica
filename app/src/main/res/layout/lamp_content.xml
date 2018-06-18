@@ -94,7 +94,7 @@
         android:text="@string/max_brightness"
         app:layout_constraintTop_toBottomOf="@+id/set_brightness_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/seekBar"
+        app:layout_constraintStart_toEndOf="@+id/lamp_brightness_seekBar"
         tools:layout_editor_absoluteY="128dp" />
 
     <TextView
@@ -103,7 +103,57 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/set_color_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        <Button
+            android:id="@+id/red_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/circle_red" />
+        <Button
+            android:id="@+id/blue_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/circle_blue"
+            android:layout_toEndOf="@+id/red_button"
+            />
+        <Button
+            android:id="@+id/green_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/blue_button"
+            android:background="@drawable/circle_green"/>
+        <Button
+            android:id="@+id/brown_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/green_button"
+            android:background="@drawable/circle_brown"/>
+        <Button
+            android:id="@+id/grey_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/brown_button"
+            android:background="@drawable/circle_grey"/>
+        <Button
+            android:id="@+id/purple_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="6dp"
+            android:layout_toEndOf="@+id/grey_button"
+            android:background="@drawable/circle_purple"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

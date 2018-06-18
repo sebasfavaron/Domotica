@@ -1,5 +1,6 @@
 package com.itba.hci.domotica;
 
+import android.opengl.GLException;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -9,12 +10,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class GsonRequest<T1, T2> extends Request<T2> {
@@ -56,9 +61,8 @@ public class GsonRequest<T1, T2> extends Request<T2> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
-            Log.d("tag",json);
-
             if (token != null) {
+
                 JSONObject jsonObject = new JSONObject(json);
 
                 if (clazz == Boolean.class) {
@@ -73,7 +77,7 @@ public class GsonRequest<T1, T2> extends Request<T2> {
                     json = jsonObject.getJSONObject(token).toString();
                 }
             }
-
+            Log.d("tag", json);
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));

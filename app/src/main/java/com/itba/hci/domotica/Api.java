@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -62,15 +63,29 @@ public class Api {
         return uuid;
     }
 
-    public String getDevices(Response.Listener<GetDevicesResponse> listener, Response.ErrorListener errorListener) {
-        String url = URL + "devices/";
-        GsonRequest<Object, GetDevicesResponse> request =
-                new GsonRequest<Object, GetDevicesResponse>(Request.Method.GET, url, null, "devices", GetDevicesResponse.class, null, listener, errorListener);
+    public String deviceAction(Device device,String actionName,String body, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + device.getId() + "/" + actionName;
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<String,Boolean> request =
+                new GsonRequest<String,Boolean>(Request.Method.PUT,url,body,"result",Boolean.class,headers,listener,errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);
         return uuid;
     }
+
+    public String getDevices(Response.Listener<GetDevicesResponse> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/";
+        GsonRequest<Object, GetDevicesResponse> request =
+                new GsonRequest<Object, GetDevicesResponse>(Request.Method.GET, url, null, "devices",
+                        GetDevicesResponse.class, null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
 
     /*
     public String addRoom(Room room, Response.Listener<Room> listener, Response.ErrorListener errorListener) {

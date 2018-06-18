@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 
 public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listDataHeader; // nombreDeDisp
     private HashMap<String, Device> listDataChild; // nombreDeDisp -> dispositivo
+    private String requestTag;
 
     public DeviceExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, Device> listDataChild) {
@@ -144,6 +149,17 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
     private View prepareAC(Device device, LayoutInflater inflater){
         final View view = inflater.inflate(R.layout.ac_content,null);
 
+        String requestTag = Api.getInstance(context).getAcState(device,new Response.Listener<AcState>() {
+            @Override
+            public void onResponse(AcState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
 
         // state
         Switch state = view.findViewById(R.id.ac_state);
@@ -286,6 +302,19 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
     private View prepareBlind(Device device, LayoutInflater inflater){
         View view = inflater.inflate(R.layout.blind_content,null);
 
+
+        String requestTag = Api.getInstance(context).getBlindState(device,new Response.Listener<BlindState>() {
+            @Override
+            public void onResponse(BlindState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
+
         Switch blind = view.findViewById(R.id.blind_switch);
         blind.setChecked(true); //todo: el boolean hay que sacarlo de la api
 
@@ -302,6 +331,18 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private View prepareDoor(Device device, LayoutInflater inflater){
         View view = inflater.inflate(R.layout.door_content,null);
+
+        String requestTag = Api.getInstance(context).getDoorState(device,new Response.Listener<DoorState>() {
+            @Override
+            public void onResponse(DoorState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
 
         Switch doorSwitch = view.findViewById(R.id.door_switch);
         doorSwitch.setChecked(true); //todo: el boolean hay que sacarlo de la api
@@ -332,6 +373,18 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
     private View prepareLamp(Device device, LayoutInflater inflater){
         final View view = inflater.inflate(R.layout.lamp_content,null);
 
+        String requestTag = Api.getInstance(context).getLampState(device,new Response.Listener<LampState>() {
+            @Override
+            public void onResponse(LampState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
+
         Switch state = view.findViewById(R.id.lamp_switch);
         state.setChecked(true); //todo: el boolean hay que sacarlo de la api
 
@@ -361,6 +414,18 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private View prepareOven(Device device, LayoutInflater inflater){
         final View view = inflater.inflate(R.layout.oven_content,null);
+
+        String requestTag = Api.getInstance(context).getOvenState(device,new Response.Listener<OvenState>() {
+            @Override
+            public void onResponse(OvenState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
 
         Switch state = view.findViewById(R.id.oven_switch);
         state.setChecked(true); //todo: el boolean hay que sacarlo de la api
@@ -460,6 +525,18 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private View prepareRefigerator(Device device, LayoutInflater inflater){
         final View view = inflater.inflate(R.layout.refrigerator_content,null);
+
+        String requestTag = Api.getInstance(context).getRefrigeratorState(device,new Response.Listener<RefrigeratorState>() {
+            @Override
+            public void onResponse(RefrigeratorState response) {
+                //response contiene los datos.
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
 
         SeekBar temperature = view.findViewById(R.id.refrigerator_temperature_seekbar);
         temperature.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

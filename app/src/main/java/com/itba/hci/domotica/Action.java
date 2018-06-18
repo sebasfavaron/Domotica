@@ -1,9 +1,11 @@
 package com.itba.hci.domotica;
 
+import java.util.ArrayList;
+
 class Action {
     private String deviceId;
     private String actionName;
-    private String[] params;
+    private ArrayList<String> params;
     private String meta;
     // todo: ver como decirle que accion realiza en el dispositivo
 
@@ -11,14 +13,14 @@ class Action {
         this.deviceId = deviceId;
         this.actionName = actionName;
         this.meta = "{}";
-        this.params = params;
+        this.params = new ArrayList<String>();
     }
 
     public Action(String deviceId, String actionName) {
         this.deviceId = deviceId;
         this.actionName = actionName;
         this.meta = "{}";
-        this.params = [];
+        this.params = new ArrayList<String>();
     }
 
     public String getMeta() {
@@ -29,6 +31,9 @@ class Action {
         this.meta = meta;
     }
 
+    public ArrayList<String> getParams() {
+        return params;
+    }
 
     public String getActionName() {
         return actionName;
@@ -38,8 +43,8 @@ class Action {
         return deviceId;
     }
 
-    public String[] getParams() {
-        return params;
+    public void setParams(ArrayList<String> params) {
+        this.params = params;
     }
 
     public void setActionName(String actionName) {
@@ -48,9 +53,5 @@ class Action {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-    }
-
-    public void setParams(String[] params) {
-        this.params = params;
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GetRoutineResponse {
     private ArrayList<Routine> routines;
 
-    public GetDevicesResponse(ArrayList<Routine> routines){
+    public GetRoutineResponse(ArrayList<Routine> routines){
         this.routines = routines;
     }
 

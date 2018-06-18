@@ -1,6 +1,7 @@
 package com.itba.hci.domotica;
 
 import android.content.Context;
+import android.opengl.GLException;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -8,6 +9,7 @@ import com.android.volley.Response;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -68,7 +70,8 @@ public class Api {
         Map<String,String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
         GsonRequest<String,Boolean> request =
-                new GsonRequest<String,Boolean>(Request.Method.PUT,url,body,"result",Boolean.class,headers,listener,errorListener);
+                new GsonRequest<String,Boolean>
+                        (Request.Method.PUT,url,body,"result", Boolean.class,headers,listener,errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);
@@ -78,14 +81,49 @@ public class Api {
     public String getDevices(Response.Listener<GetDevicesResponse> listener, Response.ErrorListener errorListener) {
         String url = URL + "devices/";
         GsonRequest<Object, GetDevicesResponse> request =
-                new GsonRequest<Object, GetDevicesResponse>(Request.Method.GET, url, null, "devices",
-                        GetDevicesResponse.class, null, listener, errorListener);
+                new GsonRequest<Object, GetDevicesResponse>
+                        (Request.Method.GET, url, null, null,
+                                GetDevicesResponse.class,null, listener, errorListener);
+
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);
         return uuid;
     }
 
+    public String getRoutines(Response.Listener<GetRoutineResponse> listener, Response.ErrorListener errorListener){
+        String url = URL + "routines/";
+        GsonRequest<Object, GetRoutineResponse> request =
+                new GsonRequest<Object, GetRoutineResponse>
+                        (Request.Method.GET, url, null, null,
+                                GetRoutineResponse.class,null, listener, errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String executeRoutine(Routine routine, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + routine.getId() + "/execute/";
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<String,Boolean> request =
+                new GsonRequest<String,Boolean>
+                        (Request.Method.PUT,url,"{}","result", Boolean.class,headers,listener,errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
+    public String getURL() {
+        return URL;
+    }
+
+    public static Api getInstance() {
+        return instance;
+    }
 
     /*
     public String addRoom(Room room, Response.Listener<Room> listener, Response.ErrorListener errorListener) {

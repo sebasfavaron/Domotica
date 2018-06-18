@@ -6,9 +6,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +20,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 
 public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
@@ -83,13 +80,13 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         view = inflater.inflate(R.layout.item_header,null); //item_header es la cosa antes de expandir
-        ImageView headerImage = (ImageView) view.findViewById(R.id.HeaderImage);
+        ImageView headerImage = (ImageView) view.findViewById(R.id.header_img);
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());
         Bitmap bitmap = null;
         switch((listDataChild.get(header.getText()).getType())){
             case "ac":
-                        headerImage.setImageResource(R.drawable.aireAcondicionado);
+                        headerImage.setImageResource(R.drawable.aireacondicionado);
                         break;
             case "blind":
                         headerImage.setImageResource(R.drawable.lampara);

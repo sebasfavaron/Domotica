@@ -61,6 +61,8 @@ public class MainViewModel extends ViewModel {
         String requestTag = Api.getInstance(appContext).getDevices(new Response.Listener<GetDevicesResponse>() {
             @Override
             public void onResponse(GetDevicesResponse response) {
+                GetDevicesResponse resp = response;
+
                 //Aca se agregaria response.getDevices();
                 //Aca se agregan los dispositivos
             }

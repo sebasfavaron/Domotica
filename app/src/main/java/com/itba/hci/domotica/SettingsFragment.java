@@ -18,7 +18,7 @@ import java.util.List;
 public class SettingsFragment extends DialogFragment {
     private String time;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settings, container);
         Switch notificationSwitch = (Switch) view.findViewById(R.id.EnableDeviceNotificationSwitch);
         Switch routineSwitch = (Switch) view.findViewById(R.id.EnableRoutineNotificationDevice);
@@ -27,11 +27,10 @@ public class SettingsFragment extends DialogFragment {
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     // If the switch button is on
 
-                }
-                else {
+                } else {
                     // If the switch button is off
 
                 }
@@ -41,11 +40,10 @@ public class SettingsFragment extends DialogFragment {
         routineSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     // If the switch button is on
 
-                }
-                else {
+                } else {
                     // If the switch button is off
 
                 }

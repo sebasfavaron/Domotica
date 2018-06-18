@@ -16,11 +16,10 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
     private MutableLiveData<HashMap<String,Device>> deviceListDataChild;
-    private MutableLiveData<HashMap<String,Routine>> routineListDataChild;
+    private MutableLiveData<ArrayList<Routine>> routineList;
     private List<String> deviceListDataHeader;
-    private List<String> routineListDataHeader;
+    private MutableLiveData<Integer> notificationPeriodInMinutes;
     private Context appContext;
-    public MutableLiveData<Integer> i;
 
     public LiveData<HashMap<String, Device>> getDeviceMap() {
         if(deviceListDataChild == null){
@@ -40,13 +39,20 @@ public class MainViewModel extends ViewModel {
         // como se modifico deviceListDataChild se deberian activar los listeners de cada fragmento y actualizar los adapters
     }
 
-    public LiveData<HashMap<String, Routine>> getRoutineMap() {
-        if(routineListDataChild == null){
-            routineListDataChild = new MutableLiveData<>();
-            routineListDataHeader = new ArrayList<>();
+    public MutableLiveData<Integer> getNotificationPeriodInMinutes() {
+        if(notificationPeriodInMinutes == null){
+            notificationPeriodInMinutes = new MutableLiveData<>();
+            //todo: ver como settear ese periodo
+        }
+        return notificationPeriodInMinutes;
+    }
+
+    public LiveData<ArrayList<Routine>> getRoutineList() {
+        if(routineList == null){
+            routineList = new MutableLiveData<>();
             loadRoutineMap();
         }
-        return routineListDataChild;
+        return routineList;
     }
 
     private void loadDeviceMap(){
@@ -65,6 +71,9 @@ public class MainViewModel extends ViewModel {
                 Toast.makeText(appContext, R.string.error_message, Toast.LENGTH_LONG).show();
             }
         });
+
+        // Vaciar dispositivos
+
 
         // Crear dispositivos segun lo que haya en la api
         //todo: meter los dispositivos de la api aca
@@ -106,26 +115,11 @@ public class MainViewModel extends ViewModel {
     }
 
     private void loadRoutineMap() {
-        routineListDataChild.setValue(new HashMap<String, Routine>());
+        routineList.setValue(new ArrayList<Routine>());
 
         // Crear rutinas
-        Routine r1 = new Routine("rutina"+Math.random(), "1234", randomActionList());
+        routineList.getValue().add(new Routine("rutina"+Math.random(), "1234", randomActionList()));
 
-        // Meter los nombres en la lista de headers
-        routineListDataHeader.add(r1.getName());
-
-        // Agregar (nombre -> rutina) al hashmap
-        routineListDataChild.getValue().put(routineListDataHeader.get(0), r1); // Header, Child data
-    }
-
-    public Integer add(){
-        if(i == null){
-            i = new MutableLiveData<>();
-            i.setValue(0);
-        } else {
-            i.setValue(i.getValue()+1);
-        }
-        return i.getValue();
     }
 
     private ArrayList<Action> randomActionList() {

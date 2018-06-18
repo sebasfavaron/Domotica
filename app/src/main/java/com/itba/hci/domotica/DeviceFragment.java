@@ -34,7 +34,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_devices, container, false);
 
         deviceListDataHeader = new ArrayList<>();
         deviceListDataChild = new HashMap<>();

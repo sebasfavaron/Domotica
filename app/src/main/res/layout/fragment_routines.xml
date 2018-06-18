@@ -7,9 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity$GeneralFragment">
 
-    <!--SOLO ESTA DE PLACEHOLDER, NO SE USA REALMENTE-->
     <ListView
-        android:id="@+id/expList"
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

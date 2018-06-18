@@ -55,7 +55,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,AcState> request =
-                new GsonRequest<Object,AcState>(Request.Method.GET, url, "{}", null, AcState.class, null, listener, errorListener);
+                new GsonRequest<Object,AcState>(Request.Method.PUT, url, "{}", null, AcState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -68,7 +68,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,BlindState> request =
-                new GsonRequest<Object,BlindState>(Request.Method.GET, url, "{}", null, BlindState.class, null, listener, errorListener);
+                new GsonRequest<Object,BlindState>(Request.Method.PUT, url, "{}", null, BlindState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -81,7 +81,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,DoorState> request =
-                new GsonRequest<Object,DoorState>(Request.Method.GET, url, "{}", null, DoorState.class, null, listener, errorListener);
+                new GsonRequest<Object,DoorState>(Request.Method.PUT, url, "{}", null, DoorState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -94,7 +94,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,LampState> request =
-                new GsonRequest<Object,LampState>(Request.Method.GET, url, "{}", null, LampState.class, null, listener, errorListener);
+                new GsonRequest<Object,LampState>(Request.Method.PUT, url, "{}", null, LampState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -107,7 +107,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,OvenState> request =
-                new GsonRequest<Object,OvenState>(Request.Method.GET, url, "{}", null, OvenState.class, null, listener, errorListener);
+                new GsonRequest<Object,OvenState>(Request.Method.PUT, url, "{}", null, OvenState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -120,7 +120,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,RefrigeratorState> request =
-                new GsonRequest<Object,RefrigeratorState>(Request.Method.GET, url, "{}", null, RefrigeratorState.class, null, listener, errorListener);
+                new GsonRequest<Object,RefrigeratorState>(Request.Method.PUT, url, "{}", null, RefrigeratorState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);

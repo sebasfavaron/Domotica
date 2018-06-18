@@ -174,7 +174,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -455,7 +455,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "down";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -506,7 +506,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "close";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -541,7 +541,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "unlock";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -592,7 +592,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -788,7 +788,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 } else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device, check, "{}", new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction(device, check, "[]", new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();

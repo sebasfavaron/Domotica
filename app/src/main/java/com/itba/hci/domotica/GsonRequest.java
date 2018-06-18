@@ -80,7 +80,6 @@ public class GsonRequest<T1, T2> extends Request<T2> {
                     json = jsonObject.getJSONObject(token).toString();
                 }
             }
-            Log.d("tag", json);
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));

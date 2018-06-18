@@ -1,5 +1,6 @@
 package com.itba.hci.domotica;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -25,13 +26,16 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
     private ListView routineListView;
     private ArrayList<Routine> routineList;
 
+    // Live data solo para el setup
+    private LiveData<ArrayList<Routine>> routineLiveData;
+
     public RoutineFragment() {
         super();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
 
         routineList = new ArrayList<>();
 
@@ -39,8 +43,25 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
         routineListView = (ListView) rootView.findViewById(R.id.list);
 
         // listeners for when data in devices changes
-        MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        model.getRoutineList().observe(getActivity(), new Observer<ArrayList<Routine>>() {
+        final MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        routineLiveData = model.getRoutineList();
+        if(routineLiveData == null){
+            Snackbar.make(rootView, R.string.error_message, Snackbar.LENGTH_LONG).setAction("RETRY", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    routineLiveData = model.getRoutineList();
+                    if(routineLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT);
+                    else endSetup();
+                }
+            });
+        } else {
+            endSetup();
+        }
+        return rootView;
+    }
+
+    private void endSetup(){
+        routineLiveData.observe(getActivity(), new Observer<ArrayList<Routine>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Routine> arrayList) {
                 routineList = arrayList;
@@ -52,6 +73,5 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
 
         // setting list adapter
         routineListView.setAdapter(routineListAdapter);
-        return rootView;
     }
 }

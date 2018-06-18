@@ -91,12 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
         MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
         model.setAppContext(this);
-        model.getDeviceMap().observe(this, new Observer<HashMap<String, Device>>() {
-            @Override
-            public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
-                Toast.makeText(getApplicationContext(),"Wow cambio",Toast.LENGTH_LONG).show();
-            }
-        });
 
         Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

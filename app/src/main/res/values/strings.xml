@@ -86,4 +86,6 @@
     <string name="updating_time3">30 minutes</string>
     <string name="updating_time5">2 hours</string>
     <string name="enable_devices_notifications_text">Enable devices notifications</string>
+    <string name="error_message">Something went wrong</string>
+    <string name="conection_error">Can\'t connect to the database at the moment. Please try again later</string>
 </resources>

@@ -84,26 +84,31 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());
         Bitmap bitmap = null;
-        switch((listDataChild.get(header.getText()).getType())){
-            case "ac":
-                        headerImage.setImageResource(R.drawable.aireacondicionado);
-                        break;
-            case "blind":
-                        headerImage.setImageResource(R.drawable.lampara);
-                        break;
-            case "door":
-                        headerImage.setImageResource(R.drawable.puerta);
-                        break;
-            case "lamp":
-                        headerImage.setImageResource(R.drawable.lampara);
-                        break;
-            case "oven":
-                        headerImage.setImageResource(R.drawable.horno);
-                        break;
-            case "refrigerator":
-                        headerImage.setImageResource(R.drawable.heladera);
-                        break;
-            //que iria en default?
+        Device device = listDataChild.get(listDataHeader.get(i));
+        if(device == null) headerImage.setImageResource(R.drawable.ic_launcher_foreground);
+        else {
+            switch (device.getType()) {
+                case "ac":
+                    headerImage.setImageResource(R.drawable.aireacondicionado);
+                    break;
+                case "blind":
+                    headerImage.setImageResource(R.drawable.lampara);
+                    break;
+                case "door":
+                    headerImage.setImageResource(R.drawable.puerta);
+                    break;
+                case "lamp":
+                    headerImage.setImageResource(R.drawable.lampara);
+                    break;
+                case "oven":
+                    headerImage.setImageResource(R.drawable.horno);
+                    break;
+                case "refrigerator":
+                    headerImage.setImageResource(R.drawable.heladera);
+                    break;
+                default:
+                    headerImage.setImageResource(R.drawable.ic_launcher_foreground);
+            }
         }
 
         return view;
@@ -119,7 +124,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
         Device device = listDataChild.get(listDataHeader.get(i));
 
-        switch (listDataChild.get(listDataHeader.get(i)).getType()){
+        switch (device.getType()){
             // Devices
             case "ac": view = prepareAC(device, inflater); break;
             case "alarm": view = prepareAlarm(device, inflater); break;

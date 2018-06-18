@@ -4,7 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -16,8 +18,8 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
     private MutableLiveData<HashMap<String,Device>> deviceListDataChild;
-    private MutableLiveData<ArrayList<Routine>> routineList;
     private List<String> deviceListDataHeader;
+    private MutableLiveData<ArrayList<Routine>> routineList;
     private MutableLiveData<Integer> notificationPeriodInMinutes;
     private Context appContext;
 
@@ -25,7 +27,8 @@ public class MainViewModel extends ViewModel {
         if(deviceListDataChild == null){
             deviceListDataChild = new MutableLiveData<>();
             deviceListDataHeader = new ArrayList<>();
-            loadDeviceMap();
+            boolean success = updateDeviceMap();
+            if(!success) return null;
         }
         return deviceListDataChild;
     }
@@ -55,29 +58,36 @@ public class MainViewModel extends ViewModel {
         return routineList;
     }
 
-    private void loadDeviceMap(){
-        deviceListDataChild.setValue(new HashMap<String, Device>());
+    private boolean updateDeviceMap(){
+        final boolean[] success = {false};
+
+        if(deviceListDataChild.getValue() == null) deviceListDataChild.setValue(new HashMap<String, Device>());
+        if(deviceListDataHeader == null) deviceListDataHeader = new ArrayList<>();
 
         String requestTag = Api.getInstance(appContext).getDevices(new Response.Listener<GetDevicesResponse>() {
             @Override
             public void onResponse(GetDevicesResponse response) {
-                GetDevicesResponse resp = response;
+                // Vaciar dispositivos
+                deviceListDataChild.getValue().clear();
+                deviceListDataHeader.clear();
 
-                //Aca se agregaria response.getDevices();
-                //Aca se agregan los dispositivos
+                // Actualizar
+                ArrayList<Device> listDevice = response.getDevices();
+                for(Device device : listDevice){
+                    deviceListDataHeader.add(device.getName());
+                    deviceListDataChild.getValue().put(device.getName(), device);
+                }
+                success[0] = true;
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("tag", error.toString());
-                Toast.makeText(appContext, R.string.error_message, Toast.LENGTH_LONG).show();
+                success[0] = false;
             }
         });
 
-        // Vaciar dispositivos
-
-
-        // Crear dispositivos segun lo que haya en la api
+        /*// Crear dispositivos segun lo que haya en la api
         //todo: meter los dispositivos de la api aca
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
@@ -104,7 +114,7 @@ public class MainViewModel extends ViewModel {
         deviceListDataHeader.add(r1.getName());
         deviceListDataChild.getValue().put(deviceListDataHeader.get(deviceListDataHeader.size()-1), r1);
         deviceListDataHeader.add(t1.getName());
-        deviceListDataChild.getValue().put(deviceListDataHeader.get(deviceListDataHeader.size()-1), t1);
+        deviceListDataChild.getValue().put(deviceListDataHeader.get(deviceListDataHeader.size()-1), t1);*/
 
         /*new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -114,6 +124,8 @@ public class MainViewModel extends ViewModel {
                         deviceListDataChild.getValue().put(deviceListDataHeader.get(deviceListDataHeader.size()-1), dTest);
                     }
                 },15000);*/
+
+        return success[0];
     }
 
     private void loadRoutineMap() {

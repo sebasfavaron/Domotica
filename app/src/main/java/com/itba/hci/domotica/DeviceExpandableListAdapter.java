@@ -99,7 +99,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     headerImage.setImageResource(R.drawable.aireacondicionado);
                     break;
                 case "blind":
-                    headerImage.setImageResource(R.drawable.lampara);
+                    headerImage.setImageResource(R.drawable.persiana);
                     break;
                 case "door":
                     headerImage.setImageResource(R.drawable.puerta);
@@ -134,13 +134,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         switch (device.getType()){
             // Devices
             case "ac": view = prepareAC(device, inflater); break;
-            case "alarm": view = prepareAlarm(device, inflater); break;
             case "blind": view = prepareBlind(device, inflater); break;
             case "door": view = prepareDoor(device, inflater); break;
             case "lamp": view = prepareLamp(device, inflater); break;
             case "oven": view = prepareOven(device, inflater); break;
             case "refrigerator": view = prepareRefigerator(device, inflater); break;
-            case "timer": view = prepareTimer(device, inflater); break;
             default: view = inflater.inflate(R.layout.default_item_content,null);
         }
 
@@ -290,14 +288,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         ArrayAdapter<String> fanSpeedAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, fanSpeedList);
         fanSpeedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fanSpeedSpinner.setAdapter(fanSpeedAdapter);
-        return view;
-    }
-
-    private View prepareAlarm(Device device, LayoutInflater inflater){
-        View view = inflater.inflate(R.layout.alarm_content,null);
-
-        // capaz no lo implementamos
-
         return view;
     }
 
@@ -634,44 +624,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         refrigeratorModeSpinner.setAdapter(refrModeAdapter);
         return view;
     }
-
-    private View prepareTimer(Device device, LayoutInflater inflater){
-        View view = inflater.inflate(R.layout.timer_content,null);
-
-
-
-        return view;
-    }
-
-    /*
-    @Override
-    public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String headerTitle = (String)getGroup(i);
-        if(view == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.item_header,null);
-        }
-        TextView lblListHeader = (TextView)view.findViewById(R.id.lblListHeader);
-        lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
-        return view;
-    }
-
-    @Override
-    public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        final String childText = (String)getChild(i,i1);
-        if(view == null)
-        {
-            LayoutInflater inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.default_item_content,null);
-        }
-
-        TextView txtListChild = (TextView)view.findViewById(R.id.lblListItem);
-        txtListChild.setText(childText);
-        return view;
-    }
-    */
 
     @Override
     public boolean isChildSelectable(int i, int i1) {

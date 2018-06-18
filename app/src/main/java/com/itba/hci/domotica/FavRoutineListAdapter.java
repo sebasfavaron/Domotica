@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class FavRoutineListAdapter extends ArrayAdapter<Routine> {
-
     private Context context;
+
     private ArrayList<Routine> routineList;
 
     public FavRoutineListAdapter(@NonNull Context context, ArrayList<Routine> list) {
@@ -45,6 +46,14 @@ public class FavRoutineListAdapter extends ArrayAdapter<Routine> {
 
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(routineList.get(position).getName());
+
+        ((Button) view.findViewById(R.id.play_routine_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo: correr la rutina aca
+
+            }
+        });
 
         return view;
     }

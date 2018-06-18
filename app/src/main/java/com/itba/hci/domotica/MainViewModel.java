@@ -58,7 +58,7 @@ public class MainViewModel extends ViewModel {
         return routineList;
     }
 
-    private boolean updateDeviceMap(){
+    public boolean updateDeviceMap(){
         final boolean[] success = {false};
 
         if(deviceListDataChild.getValue() == null) deviceListDataChild.setValue(new HashMap<String, Device>());

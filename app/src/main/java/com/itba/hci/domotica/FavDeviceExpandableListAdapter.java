@@ -143,13 +143,11 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         switch (listDataChild.get(listDataHeader.get(i)).getType()){
             // Devices
             case "ac": view = prepareAC(device, inflater); break;
-            case "alarm": view = prepareAlarm(device, inflater); break;
             case "blind": view = prepareBlind(device, inflater); break;
             case "door": view = prepareDoor(device, inflater); break;
             case "lamp": view = prepareLamp(device, inflater); break;
             case "oven": view = prepareOven(device, inflater); break;
             case "refrigerator": view = prepareRefigerator(device, inflater); break;
-            case "timer": view = prepareTimer(device, inflater); break;
             default: view = inflater.inflate(R.layout.default_item_content,null);
         }
 
@@ -305,7 +303,7 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         Switch blind = view.findViewById(R.id.blind_switch);
 
 
-        blind.setChecked(); //todo: el boolean hay que sacarlo de la api
+        blind.setChecked(true); //todo: el boolean hay que sacarlo de la api
 
         blind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -528,14 +526,6 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         ArrayAdapter<String> refrModeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, refrModeList);
         refrModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         refrigeratorModeSpinner.setAdapter(refrModeAdapter);
-        return view;
-    }
-
-    private View prepareTimer(Device device, LayoutInflater inflater){
-        View view = inflater.inflate(R.layout.timer_content,null);
-
-
-
         return view;
     }
 

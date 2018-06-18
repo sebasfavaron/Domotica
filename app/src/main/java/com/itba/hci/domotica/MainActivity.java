@@ -102,15 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        /*Timer t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask(){
-            @Override public void run(){
-                //Toast.makeText(getApplicationContext(), "asdasdasda",Toast.LENGTH_SHORT).show();
-            }
-            },0,5000);*/
-        //haces algun listener
-
     }
 
     @Override
@@ -129,7 +120,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            SettingsFragment settingsFragment = new SettingsFragment();
+            settingsFragment.show(getFragmentManager(), "settings_fragment");
+        } else if (id == R.id.action_update) {
+            MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
+            model.updateDeviceMap();
         }
 
         return super.onOptionsItemSelected(item);

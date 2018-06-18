@@ -6,20 +6,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RoutineExpandableListAdapter extends BaseExpandableListAdapter{
+public class FavRoutineExpandableListAdapter extends BaseExpandableListAdapter{
+
     private Context context;
     private List<String> listDataHeader; // nombreDeDisp
-    private HashMap<String, Routine> listDataChild; // nombreDeDisp -> dispositivo
+    private HashMap<String, Routine> listDataChild; // nombreDeRut -> dispositivo
 
-    public RoutineExpandableListAdapter(Context context, List<String> listDataHeader,
-                                       HashMap<String, Routine> listDataChild) {
+    public FavRoutineExpandableListAdapter(Context context, HashMap<String, Routine> listDataChild) {
         this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listDataChild;
+        setList(listDataChild);
 
+    }
+
+    public void setList(HashMap<String,Routine> routineHashMap){
+        int MAX = 5;
+
+        listDataChild = new HashMap<>();
+        listDataHeader = new ArrayList<>();
+
+        if(routineHashMap == null) return;
+
+        //todo: filtrar para que sean los favoritos y no haya mas que MAX
+        for(String deviceName : routineHashMap.keySet()){
+            if(listDataChild.size() >= MAX) break;
+            //if(es favorito)
+            listDataChild.put(deviceName,routineHashMap.get(deviceName));
+        }
+
+        listDataHeader.addAll(listDataChild.keySet());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -55,10 +75,6 @@ public class RoutineExpandableListAdapter extends BaseExpandableListAdapter{
     @Override
     public boolean hasStableIds() {
         return true;
-    }
-
-    public Integer routineSize(){
-        return listDataChild.size();
     }
 
     @Override

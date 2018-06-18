@@ -1,5 +1,8 @@
 package com.itba.hci.domotica;
 
+import android.opengl.GLException;
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -7,6 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
@@ -54,6 +58,7 @@ public class GsonRequest<T1, T2> extends Request<T2> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+            Log.d("tag",json);
 
             if (token != null) {
                 JSONObject jsonObject = new JSONObject(json);
@@ -67,7 +72,10 @@ public class GsonRequest<T1, T2> extends Request<T2> {
                 } else if (clazz == Long.class) {
                     json = (new Long(jsonObject.getLong(token))).toString();
                 } else {
+                    Log.d("tag", "esto se imprime");
                     json = jsonObject.getJSONObject(token).toString();
+                    Log.d("tag",json);
+                    Log.d("tag", "esto  no se imprime");
                 }
             }
 

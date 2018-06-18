@@ -1,9 +1,14 @@
 package com.itba.hci.domotica;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,18 +47,25 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-
+    private Context context;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
+    private static ArrayList<String> deviceListDataHeader;
+    private static ArrayList<String> routineListDataHeader;
+    private static HashMap<String, Device> deviceListDataChild;
+    private static HashMap<String, Routine> routineListDataChild;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = this.getApplicationContext();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,21 +82,18 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        // Set up hamburguer menu
-        DrawerLayout drawerLayout = findViewById(R.id.left_drawer_layout);
-        ListView drawerListView = findViewById(R.id.left_drawer);
-        ActionBarDrawerToggle hamburguerIcon = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close){
-            public void OnDrawerClosed(View view){}
-        };
-        List<String> drawerList = new ArrayList<>();
-        drawerList.add("Thing1");
-        drawerList.add("Thing2");
-        drawerList.add("Thing3");
-        drawerListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item,drawerList));
-        drawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Instantiate Lists and Maps
+        deviceListDataHeader = new ArrayList<>();
+        deviceListDataChild = new HashMap<>();
+        routineListDataHeader = new ArrayList<>();
+        routineListDataChild = new HashMap<>();
+
+        MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
+        model.setAppContext(this);
+        model.getDeviceMap().observe(this, new Observer<HashMap<String, Device>>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //links a paginas de ayuda etc
+            public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
+                Toast.makeText(getApplicationContext(),"Wow cambio",Toast.LENGTH_LONG).show();
             }
         });
 
@@ -91,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 AddDeviceFragment adf = new AddDeviceFragment();
                 adf.show(getFragmentManager(), "add_device_fragment");
 
@@ -138,21 +149,8 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        DeviceExpandableListAdapter deviceListAdapter;
-        RoutineExpandableListAdapter routineListAdapter;
-        ExpandableListView deviceExpListView;
-        ExpandableListView routineExpListView;
-        List<String> deviceListDataHeader;
-        List<String> routineListDataHeader;
-        HashMap<String, Device> deviceListDataChild;
-        HashMap<String, Routine> routineListDataChild;
 
-        public GeneralFragment() {
-            this.deviceListDataHeader = new ArrayList<>();
-            this.deviceListDataChild = new HashMap<>();
-            this.routineListDataHeader = new ArrayList<>();
-            this.routineListDataChild = new HashMap<>();
-        }
+        public GeneralFragment() {}
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -168,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new RoutineFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putStringArrayList("deviceListDataHeader", deviceListDataHeader);
+            args.putStringArrayList("routineListDataHeader", routineListDataHeader);
+            args.putSerializable("deviceListDataChild", deviceListDataChild);
+            args.putSerializable("routineListDataChild", routineListDataChild);
             fragment.setArguments(args);
             return fragment;
         }

@@ -131,6 +131,21 @@ public class MainViewModel extends ViewModel {
     private void loadRoutineMap() {
         routineList.setValue(new ArrayList<Routine>());
 
+        String requestTag = Api.getInstance(appContext).getRoutines(new Response.Listener<GetRoutineResponse>() {
+            @Override
+            public void onResponse(GetRoutineResponse response) {
+                // Vaciar dispositivos
+                ArrayList<Routine> routines = response.getRoutines();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("tag", error.toString());
+            }
+        });
+
+
         // Crear rutinas
         routineList.getValue().add(new Routine("rutina"+Math.random(), "1234", randomActionList()));
 

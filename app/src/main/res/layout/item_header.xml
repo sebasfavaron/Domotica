@@ -16,9 +16,10 @@
         android:layout_height="60dp" />
 
     <ImageView
+        android:id="@+id/HeaderImage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher_round"
-        android:layout_gravity="center_vertical|end"/>
+        android:layout_gravity="center_vertical|end"
+        android:src="@mipmap/ic_launcher_round" />
 
 </LinearLayout>

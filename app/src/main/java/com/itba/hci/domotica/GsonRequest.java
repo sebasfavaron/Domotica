@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 public class GsonRequest<T1, T2> extends Request<T2> {
@@ -73,7 +74,9 @@ public class GsonRequest<T1, T2> extends Request<T2> {
                     json = (new Double(jsonObject.getDouble(token))).toString();
                 } else if (clazz == Long.class) {
                     json = (new Long(jsonObject.getLong(token))).toString();
-                } else {
+                } else if (Collection.class.isAssignableFrom(clazz)) {
+                    json = jsonObject.getJSONArray(token).toString();
+                }else {
                     json = jsonObject.getJSONObject(token).toString();
                 }
             }

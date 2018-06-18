@@ -15,11 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 
 public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
@@ -80,9 +83,31 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         view = inflater.inflate(R.layout.item_header,null); //item_header es la cosa antes de expandir
-
+        ImageView headerImage = (ImageView) view.findViewById(R.id.HeaderImage);
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(getGroup(i).toString());
+        Bitmap bitmap = null;
+        switch((listDataChild.get(header.getText()).getType())){
+            case "ac":
+                        headerImage.setImageResource(R.drawable.aireAcondicionado);
+                        break;
+            case "blind":
+                        headerImage.setImageResource(R.drawable.lampara);
+                        break;
+            case "door":
+                        headerImage.setImageResource(R.drawable.puerta);
+                        break;
+            case "lamp":
+                        headerImage.setImageResource(R.drawable.lampara);
+                        break;
+            case "oven":
+                        headerImage.setImageResource(R.drawable.horno);
+                        break;
+            case "refrigerator":
+                        headerImage.setImageResource(R.drawable.heladera);
+                        break;
+            //que iria en default?
+        }
 
         return view;
     }

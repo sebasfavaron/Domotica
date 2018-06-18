@@ -146,7 +146,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private View prepareAC(Device device, LayoutInflater inflater){
+    private View prepareAC(final Device device, LayoutInflater inflater){
         final View view = inflater.inflate(R.layout.ac_content,null);
 
         String requestTag = Api.getInstance(context).getAcState(device,new Response.Listener<AcState>() {
@@ -162,29 +162,72 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         });
 
         // state
-        Switch state = view.findViewById(R.id.ac_state);
+        final Switch state = view.findViewById(R.id.ac_state);
         state.setChecked(true); //todo: el boolean hay que sacarlo de la api
 
         state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Toast.makeText(context,""+isChecked,Toast.LENGTH_SHORT).show();
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                String check;
+                if(isChecked){
+                    check = "turnOn";
+                }else {
+                    check = "turnOff";
+                }
+                String requestTag = Api.getInstance(context).deviceAction(device,check,"{}",new Response.Listener<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        //Toast.makeText(context,"").show();
+                        //Everything is bien! mandar texto que se ha prendido o apagado;
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //todo Agregar SnackBar, que no se cambio
+                        state.setChecked(!isChecked);
+                        Log.e("tag", error.toString());
+
+                    }
+                });
             }
         });
 
 
         // temperature
         SeekBar temperature = view.findViewById(R.id.ac_temperature_seek_bar);
+        final int[] lastTemperature = new int[1];
         temperature.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
                 tempText.setText(String.valueOf(progress));
+
             }
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                lastTemperature[0] = seekBar.getProgress();
+            }
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(final SeekBar seekBar) {
+
+                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
+                String requestTag = Api.getInstance(context).deviceAction(device,"setTemperature",body,new Response.Listener<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        //Toast.makeText(context,"").show();
+                        lastTemperature[0] = seekBar.getProgress();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //todo Agregar SnackBar, que no se cambio
+                        Log.e("tag", error.toString());
+                        seekBar.setProgress(lastTemperature[0]);
+                        TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
+                        tempText.setText(String.valueOf(lastTemperature[0]));
+                    }
+                });
+            }
         });
 
 
@@ -304,6 +347,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("tag", error.toString());
+
             }
         });
 

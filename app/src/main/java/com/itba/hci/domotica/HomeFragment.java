@@ -24,7 +24,7 @@ public class HomeFragment extends MainActivity.GeneralFragment {
     private ListView routineListView;
     private ArrayList<Routine> routineList;
 
-    private FavDeviceExpandableListAdapter deviceListAdapter;
+    private DeviceExpandableListAdapter deviceListAdapter;
     private ExpandableListView deviceExpListView;
     private ArrayList<String> deviceListDataHeader;
     private HashMap<String,Device> deviceListDataChild;
@@ -99,7 +99,7 @@ public class HomeFragment extends MainActivity.GeneralFragment {
             }
         });
 
-        deviceListAdapter = new FavDeviceExpandableListAdapter(getActivity(), deviceListDataChild);
+        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
 
         // setting list adapter
         deviceExpListView.setAdapter(deviceListAdapter);

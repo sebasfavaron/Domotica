@@ -72,8 +72,8 @@
     <string name="set_refrigerator_mode_option1">Default</string>
     <string name="set_refrigerator_mode_option2">Vacation</string>
     <string name="set_refrigerator_mode_option3">Party</string>
-    <string name="ac_max">32</string>
-    <string name="ac_min">10</string>
+    <string name="ac_max">38</string>
+    <string name="ac_min">18</string>
     <string name="drawer_open">Opening drawer</string>
     <string name="drawer_close">Closing drawer</string>
     <string name="enable_routines_notifications_text">Enable routines notifications</string>

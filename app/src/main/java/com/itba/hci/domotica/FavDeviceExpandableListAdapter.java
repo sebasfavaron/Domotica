@@ -305,7 +305,7 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         Switch blind = view.findViewById(R.id.blind_switch);
 
 
-        blind.setChecked(); //todo: el boolean hay que sacarlo de la api
+        //blind.setChecked(); //todo: el boolean hay que sacarlo de la api
 
         blind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

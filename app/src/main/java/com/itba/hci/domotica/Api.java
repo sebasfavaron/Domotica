@@ -1,15 +1,13 @@
 package com.itba.hci.domotica;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.opengl.GLException;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,6 +49,84 @@ public class Api {
         request.setTag(uuid);
         requestQueue.add(request);
         return uuid;
+    }
+
+    public String getAcState(Device device,String actionName,String body, Response.Listener<AcState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,AcState> request =
+                new GsonRequest<Object,AcState>(Request.Method.GET, url, body, null, AcState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String getBlindState(Device device,String actionName,String body, Response.Listener<BlindState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,BlindState> request =
+                new GsonRequest<Object,BlindState>(Request.Method.GET, url, body, null, BlindState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String getDoorState(Device device,String actionName,String body, Response.Listener<DoorState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,DoorState> request =
+                new GsonRequest<Object,DoorState>(Request.Method.GET, url, body, null, DoorState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String getLampState(Device device,String actionName,String body, Response.Listener<LampState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,LampState> request =
+                new GsonRequest<Object,LampState>(Request.Method.GET, url, body, null, LampState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String getOvenState(Device device,String actionName,String body, Response.Listener<OvenState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,OvenState> request =
+                new GsonRequest<Object,OvenState>(Request.Method.GET, url, body, null, OvenState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
+    }
+
+    public String getRefrigeratorState(Device device,String actionName,String body, Response.Listener<RefrigeratorState> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/" + device.getId() + "/" + actionName +"/";
+
+        GsonRequest<Object,RefrigeratorState> request =
+                new GsonRequest<Object,RefrigeratorState>(Request.Method.GET, url, body, null, RefrigeratorState.class, null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+
     }
 
     public String modifyDevice(Device device, Response.Listener<Boolean> listener, Response.ErrorListener errorListener) {

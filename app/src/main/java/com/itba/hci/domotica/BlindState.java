@@ -1,6 +1,6 @@
 package com.itba.hci.domotica;
 
-public class BlindState {
+public class BlindState{
     private String status;
     private Integer level;
 

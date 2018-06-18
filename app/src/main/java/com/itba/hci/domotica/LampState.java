@@ -1,11 +1,11 @@
 package com.itba.hci.domotica;
 
-public class lampState {
+public class LampState{
     private String status;
     private String color;
     private Integer brightness;
 
-    public lampState(String status, String color, Integer brightness){
+    public LampState(String status, String color, Integer brightness){
         this.brightness= brightness;
         this.color = color;
         this.status = status;

@@ -1,10 +1,10 @@
 package com.itba.hci.domotica;
 
-public class doorState {
+public class DoorState{
     private String status;
     private String lock;
 
-    public doorState(String status, String lock){
+    public DoorState(String status, String lock){
         this.lock = lock;
         this.status=status;
     }

@@ -1,6 +1,6 @@
 package com.itba.hci.domotica;
 
-public class acState {
+public class AcState{
     private String status;
     private Integer temperature;
     private String mode;
@@ -8,7 +8,7 @@ public class acState {
     private String horizontalSwing;
     private String fanSpeed;
 
-    public acState(String status, Integer temperature, String mode, String verticalSwing, String horizontalSwing, String fanSpeed){
+    public AcState(String status, Integer temperature, String mode, String verticalSwing, String horizontalSwing, String fanSpeed){
         this.fanSpeed= fanSpeed;
         this.horizontalSwing= horizontalSwing;
         this.mode =mode;

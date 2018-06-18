@@ -1,12 +1,12 @@
 package com.itba.hci.domotica;
 
-public class ovenState {
+public class OvenState{
     private String status;
     private String heat;
     private String grill;
     private String convection;
 
-    public ovenState(String status,String heat,String grill, String convection){
+    public OvenState(String status, String heat, String grill, String convection){
         this.status = status;
         this.convection= convection;
         this.grill = grill;

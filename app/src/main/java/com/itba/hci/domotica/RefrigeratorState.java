@@ -1,11 +1,11 @@
 package com.itba.hci.domotica;
 
-public class refrigeratorState {
+public class RefrigeratorState{
     private Integer freezerTemperature;
     private Integer temperature;
     private String mode;
 
-    public refrigeratorState(String mode, Integer freezerTemperature, Integer temperature){
+    public RefrigeratorState(String mode, Integer freezerTemperature, Integer temperature){
         this.freezerTemperature= freezerTemperature;
         this.mode= mode;
         this.temperature=temperature;

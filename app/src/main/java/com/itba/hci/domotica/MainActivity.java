@@ -1,8 +1,11 @@
 package com.itba.hci.domotica;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -91,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
         MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
         model.setAppContext(this);
+        Intent notificationReceiverIntent = new Intent(MainActivity.this, NotificationReceiver.class);
+        model.setNotificationData((AlarmManager) getSystemService(ALARM_SERVICE),
+                PendingIntent.getBroadcast(MainActivity.this, 0, notificationReceiverIntent, 0));
 
         Button fab = (Button) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

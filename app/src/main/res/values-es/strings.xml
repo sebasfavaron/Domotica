@@ -78,5 +78,5 @@
     <string name="error_message">Algo ha salido mal:</string>
     <string name="conection_error">No se pudo conectar a la base de datos. Por favor intente mas tarde</string>
     <string name="action_update">Actualizar</string>
-
+    <string name="routine_msg">Rutina ejecutada: </string>
 </resources>

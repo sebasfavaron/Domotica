@@ -43,6 +43,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     }
 
+    public void updateList(HashMap<String,Device> deviceHashMap){
+        listDataChild = deviceHashMap;
+        listDataHeader.addAll(listDataChild.keySet());
+    }
+
     @Override
     public int getGroupCount() {
         return listDataHeader.size();

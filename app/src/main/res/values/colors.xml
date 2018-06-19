@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#A1D6E2</color>
     <color name="colorAccent">#1995AD</color>
     <color name ="colorSecondary">#999b91</color>
-    <color name = "colorSecondaryVariant">#FFFFFF</color>
+    <color name = "colorSecondaryVariant">#fff4ae</color>
     <color name = "colorBackground">#FFFFFF</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorError">#FFFFFF</color>

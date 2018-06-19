@@ -79,7 +79,7 @@ public class AddDeviceFragment extends DialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, deviceTypes);
         spinner.setAdapter(adapter);
 
-        final TextInputLayout til = (TextInputLayout) view.findViewById(R.id.add_device_layout);
+        final TextInputEditText til = (TextInputEditText) view.findViewById(R.id.add_device_name_field);
         til.setHint("Device Name");
 
         Button addButton = view.findViewById(R.id.add_button);
@@ -88,15 +88,14 @@ public class AddDeviceFragment extends DialogFragment {
             public void onClick(View v) {
                 // hideKeyboard();
 
-                deviceName = til.getEditText().getText().toString();
+                deviceName = til.getText().toString();
 
-                //deviceName = editText.getText().toString();
                 if (!validLength(deviceName)) {
                     //editText.setError("Longitud menor a 3");
                     til.setError("Logitud debe ser mayor a 3");
                     return;
                 } else {
-                    til.setErrorEnabled(false);
+                    //til.setErrorEnabled(false);
                 }
 
                 deviceType = Device.translateEsToEn(deviceType);

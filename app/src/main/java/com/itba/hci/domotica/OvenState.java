@@ -7,7 +7,7 @@ public class OvenState{
     private String convection;
     private Integer temperature;
 
-    public OvenState(Integer temperature, status, String heat, String grill, String convection){
+    public OvenState(Integer temperature,String status, String heat, String grill, String convection){
         this.status = status;
         this.convection= convection;
         this.grill = grill;

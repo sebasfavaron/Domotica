@@ -979,7 +979,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final Spinner convectionSpinner = (Spinner) view.findViewById(R.id.convection_spinner);
-        final int[] lastconvectionSpinner = new int[1];
+        final int[] lastconvectionSpinner = new int[0];
         convectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
@@ -1024,7 +1024,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final String requestTag = Api.getInstance(context).getOvenState(device, new Response.Listener<OvenState>() {
             @Override
             public void onResponse(OvenState response) {
-                if (response.getStatus().toLowerCase() == "off"){
+                if (response.getStatus().toLowerCase().equals("off")){
                     state.setChecked(false);
                 }else {
                     state.setChecked(true);
@@ -1032,13 +1032,13 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
                 temperature.setProgress(response.getTemperature()-90);
                 heatDirSpinner.setSelection(heatDirAdapter.getPosition(response.getHeat()));
-                lastheatDirSpinner[0] = heatDirAdapter.getPosition(response.getHeat();
+                lastheatDirSpinner[0] = heatDirAdapter.getPosition(response.getHeat());
 
                 grillTypeSpinner.setSelection(grillTypeAdapter.getPosition(response.getGrill()));
                 lastgrillTypeSpinner[0] =grillTypeAdapter.getPosition(response.getGrill());
 
                 convectionSpinner.setSelection(convectionAdapter.getPosition(response.getConvection()));
-                lastconvectionSpinner[0] = response.getConvection();
+                lastconvectionSpinner[0] = convectionAdapter.getPosition(response.getConvection());
 
             }
         }, new Response.ErrorListener() {
@@ -1165,15 +1165,19 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         refrModeList.add(context.getResources().getString(R.string.set_refrigerator_mode_option2));
         refrModeList.add(context.getResources().getString(R.string.set_refrigerator_mode_option3));
 
-        ArrayAdapter<String> refrModeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, refrModeList);
+        final ArrayAdapter<String> refrModeAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, refrModeList);
         refrModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         refrigeratorModeSpinner.setAdapter(refrModeAdapter);
 
-        String requestTag = Api.getInstance(context).getRefrigeratorState(device,new Response.Listener<RefrigeratorState>() {
+        final String requestTag = Api.getInstance(context).getRefrigeratorState(device,new Response.Listener<RefrigeratorState>() {
             @Override
             public void onResponse(RefrigeratorState response) {
-                temperature.setProgress(response.getTemperature()+20);
-                freezerTemperature.getProgress(response.getFreezerTemperature());
+                temperature.setProgress(response.getTemperature()- 2);
+                lastTemperature[0] = response.getTemperature();
+                freezerTemperature.setProgress(response.getFreezerTemperature().intValue()+20);
+                lastfreezerTemperature[0] = response.getFreezerTemperature().intValue();
+                refrigeratorModeSpinner.setSelection(refrModeAdapter.getPosition(response.getMode()));
+                lastrefrigerator[0] = refrModeAdapter.getPosition(response.getMode());
             }
         }, new Response.ErrorListener() {
             @Override

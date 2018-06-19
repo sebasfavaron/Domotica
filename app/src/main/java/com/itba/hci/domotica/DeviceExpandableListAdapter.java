@@ -168,13 +168,14 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                ArrayList<Object> params = new ArrayList<Object>();
                 String check;
                 if(isChecked){
                     check = "turnOn";
                 }else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device,check,params,new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -209,11 +210,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
-
-                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setTemperature",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(seekBar.getProgress());
+                String requestTag = Api.getInstance(context).deviceAction3(device,"setTemperature",params,new Response.Listener<Integer>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
                         lastTemperature[0] = seekBar.getProgress();
                     }
@@ -233,32 +234,29 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
         // Mode
         final Spinner modeSpinner = (Spinner) view.findViewById(R.id.ac_mode_bar);
-        int lastModeSpinner;
+        final int[] lastModeSpinner = new int[1];
         modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(modeSpinner.getSelectedItem().toString());
 
-                Log.d("tag", modeSpinner.getChildAt(position).toString());
-                Log.d("tag", modeSpinner.getSelectedItem().toString());
-                String body = "[]";
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setMode",body,new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setMode",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lastModeSpinner = position;
+                        lastModeSpinner[0] = position;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        modeSpinner.setSelection(lastModeSpinner);
+                        modeSpinner.setSelection(lastModeSpinner[0]);
 
                         Log.e("tag", error.toString());
                     }
                 });
-                */
                 //todo: actualizar modo de ac en la api
             }
 
@@ -283,16 +281,14 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         vSwingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int lastvSwingSpinner;
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar vertical swing de ac en la api
-                Log.d("tag", vSwingSpinner.getChildAt(position).toString());
-                Log.d("tag", vSwingSpinner.getSelectedItem().toString());
-                String body = "[]";
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setVerticalSwing",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(vSwingSpinner.getSelectedItem().toString());
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setVerticalSwing",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                         lastvSwingSpinner = position;
                     }
@@ -304,7 +300,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                         Log.e("tag", error.toString());
                     }
                 });
-                */
+
             }
 
             @Override
@@ -327,33 +323,32 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
         // H Swing
         final Spinner hSwingSpinner = (Spinner) view.findViewById(R.id.horizontal_swing_bar);
-        int lasthSwingSpinner;
+        final int[] lasthSwingSpinner = new int[1];
 
         hSwingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar horizontal swing de ac en la api
-                Log.d("tag", hSwingSpinner.getChildAt(position).toString());
-                Log.d("tag", hSwingSpinner.getSelectedItem().toString());
-                String body = "[]";
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setHorizontalSwing",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(hSwingSpinner.getSelectedItem().toString());
+
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setHorizontalSwing",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lasthSwingSpinner = position;
+                        lasthSwingSpinner[0] = position;
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        hSwingSpinner.setSelection(lasthSwingSpinner);
+                        hSwingSpinner.setSelection(lasthSwingSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
-                */
+
             }
 
             @Override
@@ -375,33 +370,31 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         hSwingSpinner.setAdapter(hSwingAdapter);
 
         // Fan speed
-        Spinner fanSpeedSpinner = (Spinner) view.findViewById(R.id.fan_speed_bar);
-        int lastFanSpeed;
+        final Spinner fanSpeedSpinner = (Spinner) view.findViewById(R.id.fan_speed_bar);
+        final int[] lastFanSpeed = new int[1];
         fanSpeedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar fan speed de ac en la api
-            Log.d("tag", hSwingSpinner.getChildAt(position).toString());
-            Log.d("tag", hSwingSpinner.getSelectedItem().toString());
-            String body = "[]";
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setFanSpeed",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(fanSpeedSpinner.getSelectedItem().toString());
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setFanSpeed",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lasthFanSpeed = position;
+                        lastFanSpeed[0] = position;
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        hSwingSpinner.setSelection(lasthFanSpeed);
+                        fanSpeedSpinner.setSelection(lastFanSpeed[0]);
                         Log.e("tag", error.toString());
                     }
                 });
-                */
             }
 
             @Override
@@ -448,6 +441,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 //todo: actualizar la api
                 Toast.makeText(context,""+isChecked,Toast.LENGTH_SHORT).show();
+                ArrayList<Object> params = new ArrayList<Object>();
 
                 String check;
                 if(isChecked){
@@ -455,7 +449,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "down";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device,check,params,new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -500,13 +494,14 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 //todo: actualizar la api
+                ArrayList<Object> params = new ArrayList<Object>();
                 String check;
                 if(isChecked){
                     check = "open";
                 }else {
                     check = "close";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device,check,params,new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -521,8 +516,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
                     }
                 });
-
-                Toast.makeText(context,""+isChecked,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -534,14 +527,14 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 //todo: actualizar la api
-                Toast.makeText(context,""+isChecked,Toast.LENGTH_SHORT).show();
+                ArrayList<Object> params = new ArrayList<Object>();
                 String check;
                 if(isChecked){
                     check = "lock";
                 }else {
                     check = "unlock";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device,check,params,new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -585,6 +578,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //todo: actualizar la api
+                ArrayList<Object> params = new ArrayList<Object>();
 
                 String check;
                 if(isChecked){
@@ -592,7 +586,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                 }else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device,check,"[]",new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device,check,params,new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -607,8 +601,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
                     }
                 });
-
-                Toast.makeText(context,""+isChecked,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -629,10 +621,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
-                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setBrightness",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(seekBar.getProgress());
+                String requestTag = Api.getInstance(context).deviceAction3(device,"setBrightness",params,new Response.Listener<Integer>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
                         lastBrightness[0] = seekBar.getProgress();
                     }
@@ -653,10 +646,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Red);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -671,10 +666,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Red);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -689,10 +686,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Blue);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -707,10 +706,13 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Green);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -725,10 +727,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Grey);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -743,10 +747,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 @SuppressLint("ResourceType") String color = context.getResources().getString(R.color.Purple);
-                String body = "["+ color +"]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setColor",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+
+                params.add(color);
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setColor",params,new Response.Listener<String>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
                     }
                 }, new Response.ErrorListener() {
@@ -775,20 +781,22 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        Switch state = view.findViewById(R.id.oven_switch);
+        final Switch state = view.findViewById(R.id.oven_switch);
         state.setChecked(true); //todo: el boolean hay que sacarlo de la api
 
         state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 //todo: actualizar la api
+                ArrayList<Object> params = new ArrayList<Object>();
+
                 String check;
                 if (isChecked) {
                     check = "turnOn";
                 } else {
                     check = "turnOff";
                 }
-                String requestTag = Api.getInstance(context).deviceAction(device, check, "[]", new Response.Listener<Boolean>() {
+                String requestTag = Api.getInstance(context).deviceAction2(device, check, params, new Response.Listener<Boolean>() {
                     @Override
                     public void onResponse(Boolean response) {
                         //Toast.makeText(context,"").show();
@@ -798,7 +806,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        //state.setChecked(!isChecked);
+                        state.setChecked(!isChecked);
                         Log.e("tag", error.toString());
 
                     }
@@ -821,10 +829,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
-                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setTemperature",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(seekBar.getProgress());
+                String requestTag = Api.getInstance(context).deviceAction3(device,"setTemperature",params,new Response.Listener<Integer>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
                         lastTemperature[0] = seekBar.getProgress();
                     }
@@ -843,33 +852,30 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final Spinner heatDirSpinner = (Spinner) view.findViewById(R.id.heatDirSpinner);
-        int lastheatDirSpinner;
+        final int[] lastheatDirSpinner = new int[1];
         heatDirSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar heat dir de oven en la api
-                Log.d("tag", heatDirSpinner.getChildAt(position).toString());
-                Log.d("tag", heatDirSpinner.getSelectedItem().toString());
-                String body = "[]";
+                ArrayList<Object> params = new ArrayList<Object>();
 
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setHeat",body,new Response.Listener<Boolean>() {
+                params.add(heatDirSpinner.getSelectedItem().toString());
+
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setHeat",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lastheatDirSpinner = position;
+                        lastheatDirSpinner[0] = position;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        modeSpinner.setSelection(lastheatDirSpinner);
-
+                        heatDirSpinner.setSelection(lastheatDirSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
-                */
             }
 
             @Override
@@ -889,33 +895,29 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final Spinner grillTypeSpinner = (Spinner) view.findViewById(R.id.grill_type_spinner);
-        int lastgrillTypeSpinner;
+        final int[] lastgrillTypeSpinner = new int[1];
         grillTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar la api
-                Log.d("tag", grillTypeSpinner.getChildAt(position).toString());
-                Log.d("tag", grillTypeSpinner.getSelectedItem().toString());
-                String body = "[]";
+                ArrayList<Object> params = new ArrayList<Object>();
 
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setGrill",body,new Response.Listener<Boolean>() {
+                params.add(grillTypeSpinner.getSelectedItem().toString());
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setGrill",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lastgrillTypeSpinner = position;
+                        lastgrillTypeSpinner[0] = position;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        modeSpinner.setSelection(lastgrillTypeSpinner);
-
+                        grillTypeSpinner.setSelection(lastgrillTypeSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
-                */
             }
 
             @Override
@@ -935,33 +937,30 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final Spinner convectionSpinner = (Spinner) view.findViewById(R.id.convection_spinner);
-        int lastconvectionSpinner;
+        final int[] lastconvectionSpinner = new int[1];
         convectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar fan speed de ac en la api
-                Log.d("tag", convectionSpinner.getChildAt(position).toString());
-                Log.d("tag", convectionSpinner.getSelectedItem().toString());
-                String body = "[]";
+                ArrayList<Object> params = new ArrayList<Object>();
 
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setConvection",body,new Response.Listener<Boolean>() {
+                params.add(convectionSpinner.getSelectedItem().toString());
+
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setConvection",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lastconvectionSpinner = position;
+                        lastconvectionSpinner[0] = position;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        modeSpinner.setSelection(lastconvectionSpinner);
-
+                        convectionSpinner.setSelection(lastconvectionSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
-                */
             }
 
             @Override
@@ -1010,10 +1009,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
-                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setTemperature",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(seekBar.getProgress());
+                String requestTag = Api.getInstance(context).deviceAction3(device,"setTemperature",params,new Response.Listener<Integer>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
                         lastTemperature[0] = seekBar.getProgress();
                     }
@@ -1046,10 +1046,11 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
-                String body = "["+ String.valueOf(seekBar.getProgress()) + "]";
-                String requestTag = Api.getInstance(context).deviceAction(device,"setFreezerTemperature",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(seekBar.getProgress());
+                String requestTag = Api.getInstance(context).deviceAction3(device,"setFreezerTemperature",params,new Response.Listener<Integer>() {
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
                         lastfreezerTemperature[0] = seekBar.getProgress();
                     }
@@ -1068,32 +1069,29 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
 
         final Spinner refrigeratorModeSpinner = (Spinner) view.findViewById(R.id.refrigerator_mode_spinner);
-        int lastrefrigerator;
+        final int[] lastrefrigerator = new int[1];
         refrigeratorModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar modo de refrigerator en la api
-                Log.d("tag", refrigeratorModeSpinner.getChildAt(position).toString());
-                Log.d("tag", refrigeratorModeSpinner.getSelectedItem().toString());
-                String body = "[]";
-                /*
-                String requestTag = Api.getInstance(context).deviceAction(device,"setMode",body,new Response.Listener<Boolean>() {
+                ArrayList<Object> params = new ArrayList<Object>();
+                params.add(refrigeratorModeSpinner.getSelectedItem().toString());
+                String requestTag = Api.getInstance(context).deviceAction4(device,"setMode",params,new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(Boolean response) {
+                    public void onResponse(String response) {
                         //Toast.makeText(context,"").show();
-                        lastrefrigerator = position;
+                        lastrefrigerator[0] = position;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        modeSpinner.setSelection(lastrefrigerator);
+                        refrigeratorModeSpinner.setSelection(lastrefrigerator[0]);
 
                         Log.e("tag", error.toString());
                     }
                 });
-                */
             }
 
             @Override

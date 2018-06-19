@@ -3,10 +3,8 @@ package com.itba.hci.domotica;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-<<<<<<< HEAD
 import android.support.design.widget.Snackbar;
-=======
->>>>>>> fe5d3cb392fe3486088a23a2a971d049e6cfb146
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,13 +59,10 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         ((Button) view.findViewById(R.id.play_routine_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,context.getString(R.string.routine_msg)+name,Toast.LENGTH_LONG).show();
-                //todo: correr la rutina aca
-
-                String requestTag = Api.getInstance(context).executeRoutine(routineList.get(position),new Response.Listener<Boolean []>() {
+                final String requestTag = Api.getInstance(context).executeRoutine(routineList.get(position),new Response.Listener<Boolean>() {
                     @Override
-                    public void onResponse(Boolean[] response) {
-
+                    public void onResponse(Boolean response) {
+                        Toast.makeText(context,context.getString(R.string.routine_msg)+name,Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override

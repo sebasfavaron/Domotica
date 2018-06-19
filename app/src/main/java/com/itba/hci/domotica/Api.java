@@ -235,13 +235,13 @@ public class Api {
 
     }
 
-    public String executeRoutine(Routine routine, Response.Listener<Boolean[]> listener, Response.ErrorListener errorListener){
+    public String executeRoutine(Routine routine, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
         String url = URL + "devices/" + routine.getId() + "/execute/";
         Map<String,String> headers = new HashMap<String, String>();
         headers.put("Content-Type", "application/json");
-        GsonRequest<String,Boolean[]> request =
-                new GsonRequest<String,Boolean[]>
-                        (Request.Method.PUT,url,"{}","result", Boolean[].class,headers,listener,errorListener);
+        GsonRequest<String,Boolean> request =
+                new GsonRequest<String,Boolean>
+                        (Request.Method.PUT,url,"{}","result", Boolean.class,headers,listener,errorListener);
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
         requestQueue.add(request);

@@ -257,7 +257,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(modeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(modeSpinner.getSelectedItem().toString()) );
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setMode", params, new Response.Listener<String>() {
 
@@ -297,7 +297,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(vSwingSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(vSwingSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setVerticalSwing", params, new Response.Listener<String>() {
 
                     @Override
@@ -340,7 +340,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(hSwingSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(hSwingSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setHorizontalSwing", params, new Response.Listener<String>() {
 
@@ -385,7 +385,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(fanSpeedSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(fanSpeedSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setFanSpeed", params, new Response.Listener<String>() {
 
                     @Override
@@ -902,7 +902,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(heatDirSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(heatDirSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setHeat", params, new Response.Listener<String>() {
 
@@ -944,7 +944,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(grillTypeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(grillTypeSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setGrill", params, new Response.Listener<String>() {
 
                     @Override
@@ -985,7 +985,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(convectionSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(convectionSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setConvection", params, new Response.Listener<String>() {
 
@@ -1140,7 +1140,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(refrigeratorModeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(refrigeratorModeSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setMode", params, new Response.Listener<String>() {
 
                     @Override

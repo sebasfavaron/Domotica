@@ -8,6 +8,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -60,9 +61,9 @@ public class MainViewModel extends ViewModel {
         return sendNotifications;
     }
 
-    public void addDevice(){
-        // le pasan a este metodo los datos de la api y aca se agrega a la api y a la deviceListDataChild
-        // como se modifico deviceListDataChild se deberian activar los listeners de cada fragmento y actualizar los adapters
+    public void addDevice(Device device){
+        deviceListDataChild.getValue().put(device.getName(),device);
+        deviceListDataHeader.add(device.getName());
     }
 
     public LiveData<ArrayList<Routine>> getRoutineList() {
@@ -103,7 +104,6 @@ public class MainViewModel extends ViewModel {
         });
 
         /*// Crear dispositivos segun lo que haya en la api
-        //todo: meter los dispositivos de la api aca
         Device ac1 = new Device("ac1","ac");
         Device al1 = new Device("alarm1","alarm");
         Device b1 = new Device("blind1","blind");

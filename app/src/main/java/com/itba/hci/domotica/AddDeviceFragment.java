@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,13 +107,13 @@ public class AddDeviceFragment extends DialogFragment {
                 Log.d("tag",deviceName);
 
                 device = new Device(deviceName,deviceType);
-                //todo: mandar datos (deviceName y deviceType) del dispositivo nuevo a la api
-
 
                 requestTag = Api.getInstance(context).addDevice(device, new Response.Listener<Device>() {
                     @Override
                     public void onResponse(Device response) {
                         device.setId(response.getId());
+                        MainViewModel model = ViewModelProviders.of((FragmentActivity) getActivity()).get(MainViewModel.class);
+                        model.addDevice(device);
                         Log.d("tag", "Api is working. Device Id = ");
                         Log.d("tag", response.getId());
 

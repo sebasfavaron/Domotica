@@ -84,7 +84,7 @@ public class HomeFragment extends MainActivity.GeneralFragment {
                     if(routineLiveData == null) Snackbar.make(rootView, R.string.conection_error, Snackbar.LENGTH_SHORT);
                     else endSetupRoutine();
                 }
-            });
+            }).show();
         } else {
             endSetupRoutine();
         }
@@ -104,7 +104,6 @@ public class HomeFragment extends MainActivity.GeneralFragment {
                 Log.d("tag", "\n"+deviceListDataHeader.toString() + " " + deviceListDataChild.toString()+"\n\n");
                 if (deviceListAdapter != null) {
                     deviceListAdapter.updateList(stringDeviceHashMap);
-                    deviceListAdapter.notifyDataSetChanged();
                 }
             }
         });

@@ -28,7 +28,7 @@ public class FavRoutineListAdapter extends ArrayAdapter<Routine> {
 
         routineList = new ArrayList<>();
 
-        //todo: filtrar para que sean los favoritos y no haya mas que MAX
+        //todo: filtrar para que sean los favoritos
         for(Routine routine : newRoutineList){
             if(routineList.size() >= MAX) break;
             //if(es favorito)

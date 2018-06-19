@@ -438,7 +438,7 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final String requestTag = Api.getInstance(context).getAcState(device, new Response.Listener<AcState>() {
             @Override
             public void onResponse(AcState response) {
-                if (response.getStatus() == "off") {
+                if (response.getStatus() == null || response.getStatus() == "off") {
                     state.setChecked(false);
 
                 } else {
@@ -809,7 +809,7 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
         String requestTag = Api.getInstance(context).getLampState(device, new Response.Listener<LampState>() {
             @Override
             public void onResponse(LampState response) {
-                if (response.getStatus().toLowerCase() == "on") {
+                if (response.getStatus() == null || response.getStatus().toLowerCase().equals("on")) {
                     state.setChecked(true);
                 } else {
                     state.setChecked(false);

@@ -7,6 +7,8 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.midi.MidiOutputPort;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.graphics.drawable.ColorDrawable;
@@ -423,6 +425,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         fanSpeedSpinner.setAdapter(fanSpeedAdapter);
 
         final String requestTag = Api.getInstance(context).getAcState(device, new Response.Listener<AcState>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(AcState response) {
                 if (response.getStatus()== null || response.getStatus().equals("off")) {
@@ -664,6 +667,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                         lastBrightness[0] = seekBar.getProgress();
                     }
                 }, new Response.ErrorListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
@@ -799,6 +803,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         });
 
         String requestTag = Api.getInstance(context).getLampState(device, new Response.Listener<LampState>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onResponse(LampState response) {
                 if (response.getStatus() == null ||response.getStatus().toLowerCase().equals("on")){

@@ -5,13 +5,24 @@ public class OvenState{
     private String heat;
     private String grill;
     private String convection;
+    private Integer temperature;
 
-    public OvenState(String status, String heat, String grill, String convection){
+    public OvenState(Integer temperature,String status, String heat, String grill, String convection){
         this.status = status;
         this.convection= convection;
         this.grill = grill;
         this.heat = heat;
+        this.temperature = temperature;
     }
+
+    public void setTemperature(Integer temperature) {
+        this.temperature = temperature;
+    }
+
+    public Integer getTemperature() {
+        return temperature;
+    }
+
 
     public String getStatus() {
         return status;

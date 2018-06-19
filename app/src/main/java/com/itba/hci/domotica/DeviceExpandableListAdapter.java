@@ -421,6 +421,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onResponse(AcState response) {
                 if (response.getStatus()=="off") {
+
                     state.setChecked(false);
 
                 }else {
@@ -800,13 +801,15 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         String requestTag = Api.getInstance(context).getLampState(device,new Response.Listener<LampState>() {
             @Override
             public void onResponse(LampState response) {
-                if (response.getStatus().toLowerCase() =="on"){
+                if (response.getStatus() == null ||response.getStatus().toLowerCase().equals("on")){
                   state.setChecked(true);
                 }else {
                     state.setChecked(false);
                 }
+                if (response.getBrightness()!= null){
+                    brightness.setProgress(response.getBrightness().intValue());
+                }
 
-                brightness.setProgress(response.getBrightness().intValue());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -907,6 +910,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
                     @Override
                     public void onResponse(String response) {
+
                         //Toast.makeText(context,"").show();
                         lastheatDirSpinner[0] = position;
                     }
@@ -914,7 +918,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        heatDirSpinner.setSelection(lastheatDirSpinner[0]);
+                        //heatDirSpinner.setSelection(lastheatDirSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -956,7 +960,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        grillTypeSpinner.setSelection(lastgrillTypeSpinner[0]);
+                        //grillTypeSpinner.setSelection(lastgrillTypeSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -981,6 +985,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final Spinner convectionSpinner = (Spinner) view.findViewById(R.id.convection_spinner);
         final int[] lastconvectionSpinner = new int[0];
         convectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                 //todo: actualizar fan speed de ac en la api
@@ -999,7 +1004,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        convectionSpinner.setSelection(lastconvectionSpinner[0]);
+                        //convectionSpinner.setSelection(lastconvectionSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -1024,21 +1029,21 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final String requestTag = Api.getInstance(context).getOvenState(device, new Response.Listener<OvenState>() {
             @Override
             public void onResponse(OvenState response) {
-                if (response.getStatus().toLowerCase().equals("off")){
+                if (response.getStatus() == null ||response.getStatus().toLowerCase().equals("off")){
                     state.setChecked(false);
                 }else {
                     state.setChecked(true);
                 }
 
                 temperature.setProgress(response.getTemperature()-90);
-                heatDirSpinner.setSelection(heatDirAdapter.getPosition(response.getHeat()));
-                lastheatDirSpinner[0] = heatDirAdapter.getPosition(response.getHeat());
+                //heatDirSpinner.setSelection(heatDirAdapter.getPosition(response.getHeat()));
+                //lastheatDirSpinner[0] = heatDirAdapter.getPosition(response.getHeat());
 
-                grillTypeSpinner.setSelection(grillTypeAdapter.getPosition(response.getGrill()));
-                lastgrillTypeSpinner[0] =grillTypeAdapter.getPosition(response.getGrill());
+                //grillTypeSpinner.setSelection(grillTypeAdapter.getPosition(response.getGrill()));
+                //lastgrillTypeSpinner[0] =grillTypeAdapter.getPosition(response.getGrill());
 
-                convectionSpinner.setSelection(convectionAdapter.getPosition(response.getConvection()));
-                lastconvectionSpinner[0] = convectionAdapter.getPosition(response.getConvection());
+                //convectionSpinner.setSelection(convectionAdapter.getPosition(response.getConvection()));
+                //lastconvectionSpinner[0] = convectionAdapter.getPosition(response.getConvection());
 
             }
         }, new Response.ErrorListener() {
@@ -1147,7 +1152,8 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
-                        refrigeratorModeSpinner.setSelection(lastrefrigerator[0]);
+                        //
+                        //refrigeratorModeSpinner.setSelection(lastrefrigerator[0]);
 
                         Log.e("tag", error.toString());
                     }

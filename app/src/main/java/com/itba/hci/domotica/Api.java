@@ -208,6 +208,20 @@ public class Api {
         return uuid;
     }
 
+    public String getDeviceEvents(Response.Listener<GetDeviceEventsResponse> listener, Response.ErrorListener errorListener) {
+        String url = URL + "devices/events";
+        GsonRequest<Object, GetDeviceEventsResponse> request =
+                new GsonRequest<Object, GetDeviceEventsResponse>
+                        (Request.Method.GET, url, null, null,
+                                GetDeviceEventsResponse.class,null, listener, errorListener);
+
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
+
     public String getRoutines(Response.Listener<GetRoutineResponse> listener, Response.ErrorListener errorListener){
         String url = URL + "routines/";
         GsonRequest<Object, GetRoutineResponse> request =

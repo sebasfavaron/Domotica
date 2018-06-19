@@ -3,6 +3,8 @@ package com.itba.hci.domotica;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,11 +55,23 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);
         header.setText(name);
 
+        final View finalView = view;
         ((Button) view.findViewById(R.id.play_routine_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,context.getString(R.string.routine_msg)+name,Toast.LENGTH_LONG).show();
-                //todo: correr la rutina aca
+                final String requestTag = Api.getInstance(context).executeRoutine(routineList.get(position),new Response.Listener<Boolean>() {
+                    @Override
+                    public void onResponse(Boolean response) {
+                        Toast.makeText(context,context.getString(R.string.routine_msg)+name,Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("tag", error.toString());
+                        Snackbar.make(finalView, R.string.conection_error, Snackbar.LENGTH_LONG).show();
+                    }
+                });
+
 
             }
         });

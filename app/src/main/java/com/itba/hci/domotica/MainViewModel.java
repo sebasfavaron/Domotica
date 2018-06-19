@@ -188,7 +188,7 @@ public class MainViewModel extends ViewModel {
         cancelNotification();
         if(sendNotifications){
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + getNotificationPeriodInMinutes()*60000,
+                SystemClock.elapsedRealtime() + 10000,
                 getNotificationPeriodInMinutes()*60000,
                 notificationReceiverPendingIntent);
         }

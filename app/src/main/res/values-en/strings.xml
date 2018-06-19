@@ -92,4 +92,6 @@
     <string name="updating_time3">30 minutes</string>
     <string name="updating_time5">2 hours</string>
     <string name="enable_devices_notifications_text">Enable devices notifications</string>
+    <string name="notification">Notification</string>
+    <string name="notification_text">This is where the important events would be</string>
 </resources>

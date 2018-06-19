@@ -89,4 +89,6 @@
     <string name="error_message">Something went wrong: </string>
     <string name="conection_error">Can\'t connect to the database at the moment. Please try again later</string>
     <string name="routine_msg">Routine executed: </string>
+    <string name="notification">Notification</string>
+    <string name="notification_text">This is where the important events would be</string>
 </resources>

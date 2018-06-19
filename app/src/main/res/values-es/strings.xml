@@ -79,6 +79,7 @@
     <string name="conection_error">No se pudo conectar a la base de datos. Por favor intente mas tarde</string>
     <string name="action_update">Actualizar</string>
     <string name="routine_msg">Rutina ejecutada: </string>
+    <string name ="enter_device"> Ingrese nombre de dispositivo</string>
     <string name="drawer_open">Abriendo persiana</string>
     <string name="drawer_close">Cerrando persiana</string>
     <string name="enable_routines_notifications_text">Activar notificaciones de rutinas</string>

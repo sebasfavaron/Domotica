@@ -79,6 +79,7 @@
     <string name="error_message">Something went wrong: </string>
     <string name="action_update">Update</string>
     <string name="routine_msg">Routine executed: </string>
+    <string name ="enter_device"> Enter the device name</string>
     <string name="drawer_open">Opening drawer</string>
     <string name="drawer_close">Closing drawer</string>
     <string name="enable_routines_notifications_text">Enable routines notifications</string>

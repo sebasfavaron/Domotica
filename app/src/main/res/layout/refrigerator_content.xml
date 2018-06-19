@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="2°"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -43,6 +43,8 @@
         android:layout_height="17dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:min="0"
+        android:max="6"
         app:layout_constraintStart_toEndOf="@+id/textView24"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -53,7 +55,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="230°"
+        android:text="8°"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/refrigerator_temperature_seekbar"
         app:layout_constraintTop_toBottomOf="@+id/refrigerator_temperature" />
@@ -84,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="-20°"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
@@ -94,6 +96,8 @@
         android:layout_height="19dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:min="0"
+        android:max="12"
         app:layout_constraintStart_toEndOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
@@ -104,7 +108,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="-8°"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/refrigerator_freezer_temperature_seekbar"
         app:layout_constraintTop_toBottomOf="@+id/refrigerator_freezer_temperature" />

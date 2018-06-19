@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -55,7 +56,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,AcState> request =
-                new GsonRequest<Object,AcState>(Request.Method.GET, url, "{}", null, AcState.class, null, listener, errorListener);
+                new GsonRequest<Object,AcState>(Request.Method.PUT, url, "{}", null, AcState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -68,7 +69,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,BlindState> request =
-                new GsonRequest<Object,BlindState>(Request.Method.GET, url, "{}", null, BlindState.class, null, listener, errorListener);
+                new GsonRequest<Object,BlindState>(Request.Method.PUT, url, "{}", null, BlindState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -81,7 +82,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,DoorState> request =
-                new GsonRequest<Object,DoorState>(Request.Method.GET, url, "{}", null, DoorState.class, null, listener, errorListener);
+                new GsonRequest<Object,DoorState>(Request.Method.PUT, url, "{}", null, DoorState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -94,7 +95,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,LampState> request =
-                new GsonRequest<Object,LampState>(Request.Method.GET, url, "{}", null, LampState.class, null, listener, errorListener);
+                new GsonRequest<Object,LampState>(Request.Method.PUT, url, "{}", null, LampState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -107,7 +108,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,OvenState> request =
-                new GsonRequest<Object,OvenState>(Request.Method.GET, url, "{}", null, OvenState.class, null, listener, errorListener);
+                new GsonRequest<Object,OvenState>(Request.Method.PUT, url, "{}", null, OvenState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -120,7 +121,7 @@ public class Api {
         String url = URL + "devices/" + device.getId() + "/getState/";
 
         GsonRequest<Object,RefrigeratorState> request =
-                new GsonRequest<Object,RefrigeratorState>(Request.Method.GET, url, "{}", null, RefrigeratorState.class, null, listener, errorListener);
+                new GsonRequest<Object,RefrigeratorState>(Request.Method.PUT, url, "{}", null, RefrigeratorState.class, null, listener, errorListener);
 
         String uuid = UUID.randomUUID().toString();
         request.setTag(uuid);
@@ -153,6 +154,46 @@ public class Api {
         requestQueue.add(request);
         return uuid;
     }
+
+    public String deviceAction2(Device device, String actionName, ArrayList<Object> body, Response.Listener<Boolean> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + device.getId() + "/" + actionName;
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<ArrayList<Object>,Boolean> request =
+                new GsonRequest<ArrayList<Object>,Boolean>
+                        (Request.Method.PUT,url,body,"result", Boolean.class,headers,listener,errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
+    public String deviceAction3(Device device, String actionName, ArrayList<Object> body, Response.Listener<Integer> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + device.getId() + "/" + actionName;
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<ArrayList<Object>,Integer> request =
+                new GsonRequest<ArrayList<Object>,Integer>
+                        (Request.Method.PUT,url,body,"result", Integer.class,headers,listener,errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
+    public String deviceAction4(Device device, String actionName, ArrayList<Object> body, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        String url = URL + "devices/" + device.getId() + "/" + actionName;
+        Map<String,String> headers = new HashMap<String, String>();
+        headers.put("Content-Type", "application/json");
+        GsonRequest<ArrayList<Object>,String> request =
+                new GsonRequest<ArrayList<Object>,String>
+                        (Request.Method.PUT,url,body,"result", String.class,headers,listener,errorListener);
+        String uuid = UUID.randomUUID().toString();
+        request.setTag(uuid);
+        requestQueue.add(request);
+        return uuid;
+    }
+
 
     public String getDevices(Response.Listener<GetDevicesResponse> listener, Response.ErrorListener errorListener) {
         String url = URL + "devices/";

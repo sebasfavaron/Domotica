@@ -3,7 +3,10 @@ package com.itba.hci.domotica;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+<<<<<<< HEAD
 import android.support.design.widget.Snackbar;
+=======
+>>>>>>> fe5d3cb392fe3486088a23a2a971d049e6cfb146
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +33,25 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         routineList = list;
     }
 
+    public void updateList(ArrayList<Routine> list){
+        if(routineList == null) routineList = new ArrayList<>();
+        routineList.clear();
+
+        if(list == null) return;
+
+        routineList.addAll(list);
+
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public View getView(final int position, @Nullable View view, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         view = inflater != null ? inflater.inflate(R.layout.routine_header, null) : view;
+
+        Log.d("tag", "Elemento en Adapter "+ routineList.get(position) + " " );
 
         final String name = routineList.get(position).getName();
         TextView header = (TextView) view.findViewById(R.id.lblListHeader);

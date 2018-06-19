@@ -47,36 +47,37 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
         // get the listview
         deviceExpListView = (ExpandableListView) rootView.findViewById(R.id.expList);
 
+        // setting list adapter
+        deviceExpListView.setAdapter(deviceListAdapter);
+
         // listeners for when data in routines changes
         final MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
-        deviceLiveData = model.getDeviceMap();
-        if(deviceLiveData == null) {
-            // Enters if the api call failed and gives a second oportunity
-            Snackbar.make(rootView, R.string.error_message, Snackbar.LENGTH_LONG).setAction("RETRY", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deviceLiveData = model.getDeviceMap();
-                    if(deviceLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT).show();
-                    else endSetup();
-                }
-            }).show();
-        } else {
-            endSetup();
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            endSetup();
-                            Log.i("tag", "Segunda llamada a la api desde DeviceFragment (5 segs despues) pidiendo los dispositivos");
+        model.updateDeviceMap();
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        deviceLiveData = model.getDeviceMap();
+                        if(deviceLiveData == null) {
+                            // Enters if the api call failed and gives a second oportunity
+                            /*Snackbar.make(rootView, R.string.error_message, Snackbar.LENGTH_LONG).setAction("RETRY", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    deviceLiveData = model.getDeviceMap();
+                                    if(deviceLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT).show();
+                                    else endSetup(model);
+                                }
+                            }).show();*/
+                        } else {
+                            deviceListAdapter.updateList(deviceLiveData.getValue());
+                            //endSetup(model);
                         }
-                    },
-                    5000);
-        }
+                    }
+                }, 500);
 
         return rootView;
     }
 
-    private void endSetup(){
-        deviceLiveData.removeObservers(getActivity());
+    private void endSetup(MainViewModel model){
         deviceLiveData.observe(getActivity(), new Observer<HashMap<String, Device>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
@@ -90,8 +91,5 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
                 }
             }
         });
-
-        // setting list adapter
-        deviceExpListView.setAdapter(deviceListAdapter);
     }
 }

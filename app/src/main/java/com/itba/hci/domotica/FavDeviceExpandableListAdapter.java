@@ -40,15 +40,16 @@ public class FavDeviceExpandableListAdapter extends BaseExpandableListAdapter {
     public FavDeviceExpandableListAdapter(Context context, List<String> listDataHeader,
                                        HashMap<String, Device> listDataChild) {
         this.context = context;
-        setList(listDataChild);
+        updateList(listDataChild);
 
     }
 
-    public void setList(HashMap<String,Device> deviceHashMap){
+    public void updateList(HashMap<String,Device> deviceHashMap){
         int MAX = 5;
 
         listDataChild = new HashMap<>();
         listDataHeader = new ArrayList<>();
+        Log.d("tag","updateListFav "+listDataChild.keySet().toString());
 
         if(deviceHashMap == null) return;
 

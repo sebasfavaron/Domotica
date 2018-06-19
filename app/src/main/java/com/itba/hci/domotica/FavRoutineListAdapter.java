@@ -20,20 +20,24 @@ public class FavRoutineListAdapter extends ArrayAdapter<Routine> {
     public FavRoutineListAdapter(@NonNull Context context, ArrayList<Routine> list) {
         super(context, R.layout.routine_header, list);
         this.context = context;
-        setList(list);
+        updateList(list);
     }
 
-    public void setList(ArrayList<Routine> newRoutineList){
+    public void updateList(ArrayList<Routine> list){
         int MAX = 5;
 
-        routineList = new ArrayList<>();
+        if(routineList == null) routineList = new ArrayList<>();
+        routineList.clear();
+
+        if(list == null) return;
 
         //todo: filtrar para que sean los favoritos
-        for(Routine routine : newRoutineList){
+        for(Routine routine : list){
             if(routineList.size() >= MAX) break;
             //if(es favorito)
             routineList.add(routine);
         }
+
         notifyDataSetChanged();
     }
 

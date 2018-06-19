@@ -76,6 +76,7 @@
     <string name="ac_max">38</string>
     <string name="ac_min">18</string>
     <string name="conection_error">Can\'t connect to the database at the moment. Please try again later</string>
-    <string name="error_message">Something went wrong:</string>
+    <string name="error_message">Something went wrong: </string>
     <string name="action_update">Update</string>
+    <string name="routine_msg">Routine executed: </string>
 </resources>

@@ -66,6 +66,8 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
     }
 
     private void endSetup(){
+        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
+
         deviceLiveData.observe(getActivity(), new Observer<HashMap<String, Device>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
@@ -73,12 +75,14 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
                 deviceListDataChild = stringDeviceHashMap;
                 deviceListDataHeader = new ArrayList<>();
                 deviceListDataHeader.addAll(deviceListDataChild.keySet());
+                Toast.makeText(getContext(),"Recargando datos devices",Toast.LENGTH_LONG).show();
                 Log.d("tag", deviceListDataHeader.toString() + " " + deviceListDataChild.toString());
-                if (deviceListAdapter != null) deviceListAdapter.notifyDataSetChanged();
+                if (deviceListAdapter != null) {
+                    deviceListAdapter.updateList(stringDeviceHashMap);
+                    deviceListAdapter.notifyDataSetChanged();
+                }
             }
         });
-
-        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
 
         // setting list adapter
         deviceExpListView.setAdapter(deviceListAdapter);

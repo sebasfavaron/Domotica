@@ -79,4 +79,5 @@
     <string name="conection_error">No se pudo conectar a la base de datos. Por favor intente mas tarde</string>
     <string name="action_update">Actualizar</string>
     <string name="routine_msg">Rutina ejecutada: </string>
+    <string name ="enter_device"> Ingrese nombre de dispositivo</string>
 </resources>

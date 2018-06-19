@@ -51,8 +51,8 @@ public class AddDeviceFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.add_device, container);
         getDialog().setTitle(getString(R.string.add_device));
+        View view = inflater.inflate(R.layout.add_device, container);
 
         //final EditText editText = view.findViewById(R.id.add_device_name_field);
 

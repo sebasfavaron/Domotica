@@ -79,4 +79,5 @@
     <string name="error_message">Something went wrong: </string>
     <string name="action_update">Update</string>
     <string name="routine_msg">Routine executed: </string>
+    <string name ="enter_device"> Enter the device name</string>
 </resources>

@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_update) {
             MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
             model.updateDeviceMap();
+            model.updateRoutineMap();
         }
 
         return super.onOptionsItemSelected(item);

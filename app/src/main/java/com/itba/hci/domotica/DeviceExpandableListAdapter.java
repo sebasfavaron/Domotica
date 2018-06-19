@@ -47,6 +47,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     public void updateList(HashMap<String, Device> deviceHashMap) {
         listDataChild = deviceHashMap;
+        Log.d("tag","updateList "+listDataChild.keySet().toString());
         listDataHeader.addAll(listDataChild.keySet());
         notifyDataSetChanged();
     }

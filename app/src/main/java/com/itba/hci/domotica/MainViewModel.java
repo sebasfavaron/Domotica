@@ -34,16 +34,6 @@ public class MainViewModel extends ViewModel {
     @SuppressLint("StaticFieldLeak")
     private Context appContext;
 
-    public LiveData<HashMap<String, Device>> getDeviceMap() {
-        if(deviceListDataChild == null){
-            deviceListDataChild = new MutableLiveData<>();
-            deviceListDataHeader = new ArrayList<>();
-            boolean success = updateDeviceMap();
-            if(!success) return null;
-        }
-        return deviceListDataChild;
-    }
-
     public void setAlarmManager(AlarmManager alarmManager) {
         this.alarmManager = alarmManager;
     }
@@ -69,14 +59,22 @@ public class MainViewModel extends ViewModel {
     public LiveData<ArrayList<Routine>> getRoutineList() {
         if(routineList == null){
             routineList = new MutableLiveData<>();
-            loadRoutineMap();
+            updateRoutineMap();
         }
         return routineList;
     }
 
-    public boolean updateDeviceMap(){
-        final boolean[] success = {false};
+    public LiveData<HashMap<String, Device>> getDeviceMap() {
+        if(deviceListDataChild == null){
+            deviceListDataChild = new MutableLiveData<>();
+            deviceListDataHeader = new ArrayList<>();
+        }
+        return deviceListDataChild;
+    }
 
+    public boolean updateDeviceMap(){
+        final boolean[] success = {true};
+        if(deviceListDataChild == null) deviceListDataChild = new MutableLiveData<>();
         if(deviceListDataChild.getValue() == null) deviceListDataChild.setValue(new HashMap<String, Device>());
         if(deviceListDataHeader == null) deviceListDataHeader = new ArrayList<>();
 
@@ -139,19 +137,18 @@ public class MainViewModel extends ViewModel {
                         deviceListDataChild.getValue().put(deviceListDataHeader.get(deviceListDataHeader.size()-1), dTest);
                     }
                 },15000);*/
-
         return success[0];
     }
 
-    private void loadRoutineMap() {
-        routineList.setValue(new ArrayList<Routine>());
-
+    public void updateRoutineMap() {
+        if(routineList == null) routineList = new MutableLiveData<>();
         String requestTag = Api.getInstance(appContext).getRoutines(new Response.Listener<GetRoutineResponse>() {
             @Override
             public void onResponse(GetRoutineResponse response) {
                 // Vaciar dispositivos
                 ArrayList<Routine> routines = response.getRoutines();
-
+                routineList.setValue(new ArrayList<Routine>());
+                routineList.getValue().addAll(routines);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -159,11 +156,6 @@ public class MainViewModel extends ViewModel {
                 Log.e("tag", error.toString());
             }
         });
-
-
-        // Crear rutinas
-        routineList.getValue().add(new Routine("rutina"+Math.random(), "1234", randomActionList()));
-
     }
 
     private ArrayList<Action> randomActionList() {
@@ -199,7 +191,6 @@ public class MainViewModel extends ViewModel {
                 SystemClock.elapsedRealtime() + getNotificationPeriodInMinutes()*60000,
                 getNotificationPeriodInMinutes()*60000,
                 notificationReceiverPendingIntent);
-            Log.d("tag", "llamando al alarm manager");
         }
     }
 

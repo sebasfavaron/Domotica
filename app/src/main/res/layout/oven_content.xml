@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/on_text"
+        android:text="@string/off_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/off_text"
+        android:text="@string/on_text"
         app:layout_constraintStart_toEndOf="@+id/oven_switch"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="90°"
         app:layout_constraintEnd_toStartOf="@id/ac_temperature_seek_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -83,8 +83,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
-        android:min="10"
-        android:max="200"
+        android:min="0"
+        android:max="140"
         app:layout_constraintEnd_toStartOf="@id/textView18"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="230°"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/oven_temperature" />
 

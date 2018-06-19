@@ -201,29 +201,29 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
-                tempText.setText(String.valueOf(progress));
+                tempText.setText(String.valueOf(progress + 18));
 
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                lastTemperature[0] = seekBar.getProgress();
+                lastTemperature[0] = seekBar.getProgress()+18;
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(seekBar.getProgress());
+                params.add(seekBar.getProgress() + 18);
                 String requestTag = Api.getInstance(context).deviceAction3(device,"setTemperature",params,new Response.Listener<Integer>() {
                     @Override
                     public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
-                        lastTemperature[0] = seekBar.getProgress();
+                        lastTemperature[0] = seekBar.getProgress()+18;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastTemperature[0]);
+                        seekBar.setProgress(lastTemperature[0]-18);
                         TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
                         tempText.setText(String.valueOf(lastTemperature[0]));
                     }
@@ -821,28 +821,28 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 TextView tempText = (TextView) view.findViewById(R.id.oven_temperature);
-                tempText.setText(String.valueOf(progress));
+                tempText.setText(String.valueOf(progress + 90));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                lastTemperature[0] = seekBar.getProgress();
+                lastTemperature[0] = seekBar.getProgress() + 90;
             }
             @Override
             public void onStopTrackingTouch(final SeekBar seekBar) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(seekBar.getProgress());
+                params.add(seekBar.getProgress() + 90);
                 String requestTag = Api.getInstance(context).deviceAction3(device,"setTemperature",params,new Response.Listener<Integer>() {
                     @Override
                     public void onResponse(Integer response) {
                         //Toast.makeText(context,"").show();
-                        lastTemperature[0] = seekBar.getProgress();
+                        lastTemperature[0] = seekBar.getProgress() + 90;
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //todo Agregar SnackBar, que no se cambio
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastTemperature[0]);
+                        seekBar.setProgress(lastTemperature[0]-90);
                         TextView tempText = (TextView) view.findViewById(R.id.oven_temperature);
                         tempText.setText(String.valueOf(lastTemperature[0]));
                     }

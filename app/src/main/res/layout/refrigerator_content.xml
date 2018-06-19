@@ -53,7 +53,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="230°"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/refrigerator_temperature_seekbar"
         app:layout_constraintTop_toBottomOf="@+id/refrigerator_temperature" />

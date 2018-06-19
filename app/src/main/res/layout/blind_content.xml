@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/up_text"
+        android:text="@string/down_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/blind_state_text" />
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/down_text"
+        android:text="@string/up_text"
         app:layout_constraintStart_toEndOf="@+id/blind_switch"
         app:layout_constraintTop_toBottomOf="@+id/blind_state_text" />
 </android.support.constraint.ConstraintLayout>

@@ -38,6 +38,7 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
         final View rootView = inflater.inflate(R.layout.fragment_routines, container, false);
 
         routineList = new ArrayList<>();
+        routineListAdapter = new RoutineListAdapter(getActivity(), routineList);
 
         // get the listview
         routineListView = (ListView) rootView.findViewById(R.id.list);
@@ -61,6 +62,7 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
     }
 
     private void endSetup(){
+        routineLiveData.removeObservers(getActivity());
         routineLiveData.observe(getActivity(), new Observer<ArrayList<Routine>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Routine> arrayList) {
@@ -68,8 +70,6 @@ public class RoutineFragment extends MainActivity.GeneralFragment {
                 if(routineListAdapter != null) routineListAdapter.notifyDataSetChanged();
             }
         });
-
-        routineListAdapter = new RoutineListAdapter(getActivity(), routineList);
 
         // setting list adapter
         routineListView.setAdapter(routineListAdapter);

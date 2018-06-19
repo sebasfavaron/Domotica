@@ -42,6 +42,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
 
         deviceListDataHeader = new ArrayList<>();
         deviceListDataChild = new HashMap<>();
+        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
 
         // get the listview
         deviceExpListView = (ExpandableListView) rootView.findViewById(R.id.expList);
@@ -50,24 +51,32 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
         final MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         deviceLiveData = model.getDeviceMap();
         if(deviceLiveData == null) {
+            // Enters if the api call failed and gives a second oportunity
             Snackbar.make(rootView, R.string.error_message, Snackbar.LENGTH_LONG).setAction("RETRY", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     deviceLiveData = model.getDeviceMap();
-                    if(deviceLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT);
+                    if(deviceLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT).show();
                     else endSetup();
                 }
-            });
+            }).show();
         } else {
             endSetup();
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            endSetup();
+                            Log.i("tag", "Segunda llamada a la api desde DeviceFragment (5 segs despues) pidiendo los dispositivos");
+                        }
+                    },
+                    5000);
         }
 
         return rootView;
     }
 
     private void endSetup(){
-        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
-
+        deviceLiveData.removeObservers(getActivity());
         deviceLiveData.observe(getActivity(), new Observer<HashMap<String, Device>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
@@ -75,8 +84,7 @@ public class DeviceFragment extends MainActivity.GeneralFragment {
                 deviceListDataChild = stringDeviceHashMap;
                 deviceListDataHeader = new ArrayList<>();
                 deviceListDataHeader.addAll(deviceListDataChild.keySet());
-                Toast.makeText(getContext(),"Recargando datos devices",Toast.LENGTH_LONG).show();
-                Log.d("tag", deviceListDataHeader.toString() + " " + deviceListDataChild.toString());
+                Log.d("tag", "\n"+deviceListDataHeader.toString() + " " + deviceListDataChild.toString()+"\n\n");
                 if (deviceListAdapter != null) {
                     deviceListAdapter.updateList(stringDeviceHashMap);
                     deviceListAdapter.notifyDataSetChanged();

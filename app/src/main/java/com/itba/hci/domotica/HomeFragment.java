@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class HomeFragment extends MainActivity.GeneralFragment {
         deviceListDataHeader = new ArrayList<>();
         deviceListDataChild = new HashMap<>();
         routineList = new ArrayList<>();
+        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
+        routineListAdapter = new FavRoutineListAdapter(getActivity(), routineList);
 
         // set textviews
         ((TextView)rootView.findViewById(R.id.device_title)).setText(R.string.tab_text_2);
@@ -57,14 +60,17 @@ public class HomeFragment extends MainActivity.GeneralFragment {
         final MainViewModel model = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
         deviceLiveData = model.getDeviceMap();
         if(deviceLiveData == null) {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.error_message, Snackbar.LENGTH_LONG).setAction("RETRY", new View.OnClickListener() {
+            // Enters if the api call failed and gives a second oportunity
+            Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.error_message, Snackbar.LENGTH_LONG);
+            snackbar.setAction("RETRY", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     deviceLiveData = model.getDeviceMap();
-                    if(deviceLiveData == null) Snackbar.make(rootView, R.string.conection_error, Snackbar.LENGTH_SHORT);
+                    if(deviceLiveData == null) Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.conection_error, Snackbar.LENGTH_SHORT).show();
                     else endSetupDevice();
                 }
             });
+            snackbar.show();
         } else {
             endSetupDevice();
         }
@@ -87,6 +93,7 @@ public class HomeFragment extends MainActivity.GeneralFragment {
     }
 
     private void endSetupDevice(){
+        deviceLiveData.removeObservers(getActivity());
         deviceLiveData.observe(getActivity(), new Observer<HashMap<String, Device>>() {
             @Override
             public void onChanged(@Nullable HashMap<String, Device> stringDeviceHashMap) {
@@ -94,18 +101,20 @@ public class HomeFragment extends MainActivity.GeneralFragment {
                 deviceListDataChild = stringDeviceHashMap;
                 deviceListDataHeader = new ArrayList<>();
                 deviceListDataHeader.addAll(deviceListDataChild.keySet());
-                Toast.makeText(getContext(), ((Integer) deviceListDataChild.size()).toString(), Toast.LENGTH_LONG).show();
-                if (deviceListAdapter != null) deviceListAdapter.notifyDataSetChanged();
+                Log.d("tag", "\n"+deviceListDataHeader.toString() + " " + deviceListDataChild.toString()+"\n\n");
+                if (deviceListAdapter != null) {
+                    deviceListAdapter.updateList(stringDeviceHashMap);
+                    deviceListAdapter.notifyDataSetChanged();
+                }
             }
         });
-
-        deviceListAdapter = new DeviceExpandableListAdapter(getActivity(), deviceListDataHeader, deviceListDataChild);
 
         // setting list adapter
         deviceExpListView.setAdapter(deviceListAdapter);
     }
 
     private void endSetupRoutine(){
+        routineLiveData.removeObservers(getActivity());
         routineLiveData.observe(getActivity(), new Observer<ArrayList<Routine>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Routine> arrayList) {
@@ -113,8 +122,6 @@ public class HomeFragment extends MainActivity.GeneralFragment {
                 if(routineListAdapter != null) routineListAdapter.notifyDataSetChanged();
             }
         });
-
-        routineListAdapter = new FavRoutineListAdapter(getActivity(), routineList);
 
         // setting list adapter
         routineListView.setAdapter(routineListAdapter);

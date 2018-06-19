@@ -104,7 +104,6 @@ public class HomeFragment extends MainActivity.GeneralFragment {
                 Log.d("tag", "\n"+deviceListDataHeader.toString() + " " + deviceListDataChild.toString()+"\n\n");
                 if (deviceListAdapter != null) {
                     deviceListAdapter.updateList(stringDeviceHashMap);
-                    deviceListAdapter.notifyDataSetChanged();
                 }
             }
         });

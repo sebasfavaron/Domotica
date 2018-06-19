@@ -79,4 +79,17 @@
     <string name="error_message">Something went wrong: </string>
     <string name="action_update">Update</string>
     <string name="routine_msg">Routine executed: </string>
+    <string name ="enter_device"> Enter the device name</string>
+    <string name="drawer_open">Opening drawer</string>
+    <string name="drawer_close">Closing drawer</string>
+    <string name="enable_routines_notifications_text">Enable routines notifications</string>
+    <string name="enable_notifications">Enable</string>
+    <string name="set_update_time">Set update time</string>
+    <string name="disable_notifications">Disable</string>
+    <string name="updating_time1">5 minutes</string>
+    <string name="updating_time2">10 minutes</string>
+    <string name="updating_time4">1 hour</string>
+    <string name="updating_time3">30 minutes</string>
+    <string name="updating_time5">2 hours</string>
+    <string name="enable_devices_notifications_text">Enable devices notifications</string>
 </resources>

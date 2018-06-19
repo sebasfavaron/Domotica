@@ -244,7 +244,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        seekBar.setProgress(lastTemperature[0] - 18);
+                        seekBar.setProgress(lastTemperature[0] - 18,false);
                         TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
                         tempText.setText(String.valueOf(lastTemperature[0]));
                     }
@@ -258,7 +258,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(modeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(modeSpinner.getSelectedItem().toString()) );
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setMode", params, new Response.Listener<String>() {
 
@@ -271,7 +271,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        modeSpinner.setSelection(lastModeSpinner[0]);
+                       // modeSpinner.setSelection(lastModeSpinner[0],false);
                     }
                 });
             }
@@ -298,7 +298,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(vSwingSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(vSwingSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setVerticalSwing", params, new Response.Listener<String>() {
 
                     @Override
@@ -310,7 +310,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        vSwingSpinner.setSelection(lastvSwingSpinner[0]);
+                       // vSwingSpinner.setSelection(lastvSwingSpinner[0],false);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -341,7 +341,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(hSwingSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(hSwingSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setHorizontalSwing", params, new Response.Listener<String>() {
 
@@ -355,7 +355,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        hSwingSpinner.setSelection(lasthSwingSpinner[0]);
+                        //hSwingSpinner.setSelection(lasthSwingSpinner[0],false);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -386,7 +386,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(fanSpeedSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(fanSpeedSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setFanSpeed", params, new Response.Listener<String>() {
 
                     @Override
@@ -399,7 +399,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        fanSpeedSpinner.setSelection(lastFanSpeed[0]);
+                        //fanSpeedSpinner.setSelection(lastFanSpeed[0],false);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -425,17 +425,22 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final String requestTag = Api.getInstance(context).getAcState(device, new Response.Listener<AcState>() {
             @Override
             public void onResponse(AcState response) {
-                if (response.getStatus() == "off") {
+                if (response.getStatus()== null || response.getStatus().equals("off")) {
+
                     state.setChecked(false);
 
                 } else {
                     state.setChecked(true);
                 }
-                temperature.setProgress(response.getTemperature().intValue() + 18);
-                modeSpinner.setSelection(modeAdapter.getPosition(response.getMode()));
-                hSwingSpinner.setSelection(hSwingAdapter.getPosition(response.getHorizontalSwing()));
-                vSwingSpinner.setSelection(vSwingAdapter.getPosition(response.getVerticalSwing()));
-                fanSpeedSpinner.setSelection(fanSpeedAdapter.getPosition(response.getFanSpeed()));
+                if (response.getTemperature() != null){
+                    temperature.setProgress(response.getTemperature().intValue() + 18,false);
+                }
+                /*
+                modeSpinner.setSelection(modeAdapter.getPosition(response.getMode()),false);
+                hSwingSpinner.setSelection(hSwingAdapter.getPosition(response.getHorizontalSwing()),false);
+                vSwingSpinner.setSelection(vSwingAdapter.getPosition(response.getVerticalSwing()),false);
+                fanSpeedSpinner.setSelection(fanSpeedAdapter.getPosition(response.getFanSpeed()),false);
+                */
 
                 //response contiene los datos.
             }
@@ -459,7 +464,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         blind.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                Toast.makeText(context, "" + isChecked, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "" + isChecked, Toast.LENGTH_SHORT).show();
                 ArrayList<Object> params = new ArrayList<Object>();
 
                 String check;
@@ -576,12 +581,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         String requestTag = Api.getInstance(context).getDoorState(device, new Response.Listener<DoorState>() {
             @Override
             public void onResponse(DoorState response) {
-                if (response.getStatus() == "close") {
+                if ( response.getStatus() == null||response.getStatus() == "close") {
                     doorSwitch.setChecked(false);
                 } else {
                     doorSwitch.setChecked(true);
                 }
-                if (response.getLock().toLowerCase() == "lock") {
+                if (response.getLock() == null ||response.getLock().toLowerCase() == "lock") {
                     doorSwitch.setChecked(true);
                 } else {
                     doorSwitch.setChecked(false);
@@ -605,7 +610,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
 
         state.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
                 String check;
@@ -624,7 +629,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        //state.setChecked(!isChecked);
+                        state.setChecked(!isChecked);
                         Log.e("tag", error.toString());
 
                     }
@@ -663,7 +668,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastBrightness[0]);
+                        seekBar.setProgress(lastBrightness[0],false);
                         TextView tempText = (TextView) view.findViewById(R.id.brightness_text);
                         tempText.setText(String.valueOf(lastBrightness[0]));
                     }
@@ -796,13 +801,16 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         String requestTag = Api.getInstance(context).getLampState(device, new Response.Listener<LampState>() {
             @Override
             public void onResponse(LampState response) {
-                if (response.getStatus().toLowerCase().equals("on")) {
-                    state.setChecked(true);
-                } else {
+                if (response.getStatus() == null ||response.getStatus().toLowerCase().equals("on")){
+                  state.setChecked(true);
+                }else {
                     state.setChecked(false);
                 }
 
-                brightness.setProgress(response.getBrightness());
+                if (response.getBrightness()!= null){
+                    brightness.setProgress(response.getBrightness().intValue(),false);
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -879,7 +887,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastTemperature[0] - 90);
+                        seekBar.setProgress(lastTemperature[0] - 90,false);
                         TextView tempText = (TextView) view.findViewById(R.id.oven_temperature);
                         tempText.setText(String.valueOf(lastTemperature[0]));
                     }
@@ -895,12 +903,13 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(heatDirSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(heatDirSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setHeat", params, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
+
                         //Toast.makeText(context,"").show();
                         lastheatDirSpinner[0] = position;
                     }
@@ -908,7 +917,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        heatDirSpinner.setSelection(lastheatDirSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -937,7 +945,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(grillTypeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(grillTypeSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setGrill", params, new Response.Listener<String>() {
 
                     @Override
@@ -949,7 +957,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        grillTypeSpinner.setSelection(lastgrillTypeSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -974,11 +981,12 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final Spinner convectionSpinner = (Spinner) view.findViewById(R.id.convection_spinner);
         final int[] lastconvectionSpinner = new int[0];
         convectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
 
-                params.add(convectionSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(convectionSpinner.getSelectedItem().toString()));
 
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setConvection", params, new Response.Listener<String>() {
 
@@ -991,7 +999,6 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        convectionSpinner.setSelection(lastconvectionSpinner[0]);
                         Log.e("tag", error.toString());
                     }
                 });
@@ -1016,22 +1023,26 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
         final String requestTag = Api.getInstance(context).getOvenState(device, new Response.Listener<OvenState>() {
             @Override
             public void onResponse(OvenState response) {
-                if (response.getStatus().toLowerCase().equals("off")) {
+                if (response.getStatus() == null ||response.getStatus().toLowerCase().equals("off")){
                     state.setChecked(false);
                 } else {
                     state.setChecked(true);
                 }
 
-                temperature.setProgress(response.getTemperature() - 90);
-                heatDirSpinner.setSelection(heatDirAdapter.getPosition(response.getHeat()));
+                if (response.getTemperature()!=null){
+                    temperature.setProgress(response.getTemperature() - 90,false);
+                }
+
+                /*
+                heatDirSpinner.setSelection(heatDirAdapter.getPosition(response.getHeat()),false);
                 lastheatDirSpinner[0] = heatDirAdapter.getPosition(response.getHeat());
 
-                grillTypeSpinner.setSelection(grillTypeAdapter.getPosition(response.getGrill()));
+                grillTypeSpinner.setSelection(grillTypeAdapter.getPosition(response.getGrill()),false);
                 lastgrillTypeSpinner[0] = grillTypeAdapter.getPosition(response.getGrill());
 
-                convectionSpinner.setSelection(convectionAdapter.getPosition(response.getConvection()));
+                convectionSpinner.setSelection(convectionAdapter.getPosition(response.getConvection()),false);
                 lastconvectionSpinner[0] = convectionAdapter.getPosition(response.getConvection());
-
+                */
             }
         }, new Response.ErrorListener() {
             @Override
@@ -1076,7 +1087,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastTemperature[0] - 2);
+                        seekBar.setProgress(lastTemperature[0] - 2,false);
                         TextView tempText = (TextView) view.findViewById(R.id.ac_temperature);
                         tempText.setText(String.valueOf(lastTemperature[0]));
                     }
@@ -1115,7 +1126,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
                         Log.e("tag", error.toString());
-                        seekBar.setProgress(lastfreezerTemperature[0] + 20);
+                        seekBar.setProgress(lastfreezerTemperature[0] + 20,false);
                         TextView tempText = (TextView) view.findViewById(R.id.refrigerator_freezer_temperature);
                         tempText.setText(String.valueOf(lastfreezerTemperature[0]));
                     }
@@ -1130,7 +1141,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> parent, final View view, final int position, long id) {
                 ArrayList<Object> params = new ArrayList<Object>();
-                params.add(refrigeratorModeSpinner.getSelectedItem().toString());
+                params.add(Language.spanishToEnglish(refrigeratorModeSpinner.getSelectedItem().toString()));
                 String requestTag = Api.getInstance(context).deviceAction4(device, "setMode", params, new Response.Listener<String>() {
 
                     @Override
@@ -1142,7 +1153,7 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Snackbar.make(view, R.string.conection_error, Snackbar.LENGTH_LONG).show();
-                        refrigeratorModeSpinner.setSelection(lastrefrigerator[0]);
+                        //refrigeratorModeSpinner.setSelection(lastrefrigerator[0],false);
 
                         Log.e("tag", error.toString());
                     }
@@ -1168,11 +1179,13 @@ public class DeviceExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onResponse(RefrigeratorState response) {
                 temperature.setProgress(response.getTemperature() - 2);
+                /*
                 lastTemperature[0] = response.getTemperature();
-                freezerTemperature.setProgress(response.getFreezerTemperature() + 20);
+                freezerTemperature.setProgress(response.getFreezerTemperature() + 20,false);
                 lastfreezerTemperature[0] = response.getFreezerTemperature();
-                refrigeratorModeSpinner.setSelection(refrModeAdapter.getPosition(response.getMode()));
+                refrigeratorModeSpinner.setSelection(refrModeAdapter.getPosition(response.getMode()),false);
                 lastrefrigerator[0] = refrModeAdapter.getPosition(response.getMode());
+                */
             }
         }, new Response.ErrorListener() {
             @Override

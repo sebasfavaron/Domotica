@@ -51,8 +51,8 @@ public class AddDeviceFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.add_device, container);
         getDialog().setTitle(getString(R.string.add_device));
+        View view = inflater.inflate(R.layout.add_device, container);
 
         //final EditText editText = view.findViewById(R.id.add_device_name_field);
 
@@ -71,13 +71,11 @@ public class AddDeviceFragment extends DialogFragment {
         spinner.setOnItemSelectedListener(itemSelectedListener);
         List<String> deviceTypes = new ArrayList<>();
         deviceTypes.add(getString(R.string.ac));
-        deviceTypes.add(getString(R.string.alarm));
         deviceTypes.add(getString(R.string.blind));
         deviceTypes.add(getString(R.string.door));
         deviceTypes.add(getString(R.string.lamp));
         deviceTypes.add(getString(R.string.oven));
         deviceTypes.add(getString(R.string.refrigerator));
-        deviceTypes.add(getString(R.string.timer));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, deviceTypes);
         spinner.setAdapter(adapter);
 
